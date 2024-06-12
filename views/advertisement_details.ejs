@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Advertisement Details</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="topNav">
+      <div class="topNav-centered">
+        <% if (user) { %>
+        <a><%= user.username %></a>
+        <% } %>
+      </div>
+
+      <a href="/">Home</a>
+
+      <div class="topNav-right">
+        <% if (user) { %>
+        <a href="/logout">Logout</a>
+        <% } else { %>
+
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+        <% } %>
+      </div>
+    </div>
+
+    <h1>Advertisement Details</h1>
+    <h2><%= advertisement.brand %></h2>
+    <p>City: <%= advertisement.city %></p>
+    <p>Price: $<%= advertisement.price %></p>
+    <p>Date: <%= advertisement.date %></p>
+    <p>Owner: <%= advertisement.username %></p>
+    <% advertisement.images.forEach(image => { %>
+    <div class="image" data-id="<%= image.url %>" z>
+      <img
+        src="<%= image.url %>"
+        alt="Image for <%= advertisement.brand %>"
+        style="max-width: 400px; max-height: 400px"
+      />
+      <% if (user && user.username === advertisement.username) { %>
+      <button class="delete-image">Delete</button>
+      <% } %>
+    </div>
+
+    <% }) %> <% if (user && user.username === advertisement.username) { %>
+    <h3>Upload a new image</h3>
+    <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %> <%- include('partials/footer.ejs') %>
+    <script src="/ajax_delete.js"></script>
+  </body>
+</html>

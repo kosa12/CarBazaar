@@ -1,0 +1,100 @@
+env:
+  browser: false
+  node: true
+  es2022: true
+extends:
+  - eslint:recommended
+  - airbnb-base
+  - prettier
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+parserOptions:
+  ecmaVersion: latest
+plugins:
+  - prettier
+rules:
+  semi:
+    - error
+    - always
+  quotes:
+    - error
+    - single
+    - avoidEscape: true
+  max-len: ["error", { "code": 120, "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreComments": true }]
+  max-classes-per-file: ["error", 5]
+  no-console: 0
+  linebreak-style: 0
+  no-underscore-dangle: ["error", { "allow": ["_id"] }]
+  max-nested-callbacks: ["error", 4]
+  max-params: ["error", 8]
+  max-depth: ["error", 5]
+  max-lines-per-function: ["error", 100]
+  complexity: ["error", 12]
+  class-methods-use-this: 0
+  arrow-parens: ["error", "always"]
+  require-await: ["error"]
+  import/no-unresolved: error
+  import/extensions: ["error", { "js": "always", "ts": "never" }]
+  no-param-reassign: 0
+  no-plusplus: 0
+  lines-between-class-members: ["error", "always", { "exceptAfterSingleLine": true }]
+  import/prefer-default-export: 0
+  no-trailing-spaces: ["error", { "skipBlankLines": true, "ignoreComments": true }]
+  camelcase: error
+  spaced-comment: error
+  no-duplicate-imports: error
+  prettier/prettier: warn
+
+overrides:
+  - files:
+      - "public/**/*"
+      - "static/**/*"
+    env:
+      browser: true
+      node: false
+      es6: true
+    extends:
+      - eslint:recommended
+      - airbnb-base
+      - prettier
+    globals:
+      Atomics: readonly
+      SharedArrayBuffer: readonly
+    parserOptions:
+      ecmaVersion: latest
+    plugins:
+      - prettier
+    rules:
+      no-alert: 0
+      semi:
+        - error
+        - always
+      quotes:
+        - error
+        - single
+        - avoidEscape: true
+      max-len: ["error", { "code": 120, "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreComments": true }]
+      max-classes-per-file: ["error", 5]
+      no-console: 0
+      linebreak-style: 0
+      no-underscore-dangle: ["error", { "allow": ["_id"] }]
+      max-nested-callbacks: ["error", 4]
+      max-params: ["error", 8]
+      max-depth: ["error", 5]
+      max-lines-per-function: ["error", 100]
+      complexity: ["error", 12]
+      class-methods-use-this: 0
+      arrow-parens: ["error", "always"]
+      require-await: ["error"]
+      import/no-unresolved: error
+      import/extensions: ["error", { "js": "always", "ts": "never" }]
+      no-param-reassign: 0
+      no-plusplus: 0
+      lines-between-class-members: ["error", "always", { "exceptAfterSingleLine": true }]
+      import/prefer-default-export: 0
+      no-trailing-spaces: ["error", { "skipBlankLines": true, "ignoreComments": true }]
+      camelcase: error
+      spaced-comment: error
+      no-duplicate-imports: error
+      prettier/prettier: warn

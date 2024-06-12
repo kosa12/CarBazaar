@@ -1,0 +1,183 @@
+body {
+  font-family: 'Courier New', monospace;
+  background-color: #eceae3;
+  margin: 0;
+  padding: 20px;
+}
+
+.search {
+  margin: 0;
+  padding: 25px;
+  width: 30%;
+}
+
+.topNav {
+  position: relative;
+  border: 3px solid #32012f;
+  border-radius: 10px;
+  background-color: #e2dfd0;
+  overflow: hidden;
+}
+
+.topNav-centered a {
+  border-radius: 10px;
+  box-shadow: #2f022b 0 0 10px;
+  float: none;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  color: white;
+  transform: translate(-50%, -50%);
+}
+
+.topNav-right {
+  float: right;
+}
+
+a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  margin: 15px;
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #32012f;
+  font-size: 17px;
+}
+
+a:hover {
+  background-color: #85117d;
+  color: #f2f2f2;
+}
+
+h1 {
+  color: #333;
+}
+
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  font-weight: bold;
+}
+
+#wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  margin-top: 15px;
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #32012f;
+  font-size: 17px;
+}
+
+button:hover {
+  background-color: #85117d;
+  color: #f2f2f2;
+}
+
+.advertisement {
+  flex: 0 0 19%;
+  height: 70%;
+  margin: 25px;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: #5c0b55 0 0 15px;
+  background-color: #e2dfd0;
+}
+
+img {
+  border-radius: 0.5em 0.5em 0.5em 0.5em;
+  width: 100%;
+  padding: 2px;
+}
+
+#advertisementsList {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  border: #2f022b 2px solid;
+  border-radius: 10px;
+  background-color: #e2dfd0;
+  padding: 20px;
+}
+
+.carBrand {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #32012f;
+  margin-top: 10px;
+}
+
+.carPrice {
+  text-align: center;
+  margin-top: 13px;
+  font-weight: bold;
+  color: #f97300;
+}
+
+.city {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #32012f;
+}
+
+.extra-details {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #32012f;
+}
+
+.search {
+  margin-top: 50px;
+}
+
+form {
+  border: #2f022b 2px solid;
+  border-radius: 10px;
+}
+
+.title {
+  font-weight: 900;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.input {
+  color: #524c42;
+  width: 90%;
+  background-color: #e2dfd0;
+  border: #2f022b 3px solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.input::placeholder {
+  color: var(--font-color-sub);
+  opacity: 0.8;
+}
+
+footer {
+  text-align: center;
+  margin-top: 50px;
+  color: #32012f;
+}

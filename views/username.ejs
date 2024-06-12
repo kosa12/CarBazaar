@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Used Car Dealership</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="topNav">
+      <a href="/">Home</a>
+
+      <div class="topNav-right">
+        <a href="/logout">Logout</a>
+        <a href="/user/<%= user.id %>/settings">Settings</a>
+      </div>
+    </div>
+    <main>
+      <h1>Welcome, <%= user.username %>!</h1>
+      <h2>Here are the cars you have posted:</h2>
+      <div id="advertisementsList">
+        <% advertisements.forEach(ad => { %>
+        <div class="advertisement">
+          <% if (ad.imageUrl) { %>
+          <img src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
+          <% } %>
+          <h3 class="carBrand"><%= ad.brand %></h3>
+          <p class="carPrice">Price: $<%= ad.price %></p>
+          <p class="city">City: <%= ad.city %></p>
+          <br />
+          <div id="wrapper"><a href="/advertisement/<%= ad.id%>" class="view-full">View Full Details</a></div>
+          <div id="wrapper">
+            <br />
+            <button class="view-details" data-id="<%= ad.id %>">View More Info</button>
+          </div>
+
+          <div class="extra-details" id="details-<%= ad.id %>"></div>
+        </div>
+        <% }); %>
+      </div>
+
+      <%- include('partials/add_ads.ejs') %>
+    </main>
+    <footer>
+      <p>&copy; 2024 Used Car Dealership. All rights reserved.</p>
+    </footer>
+    <script src="/ajax_details.js"></script>
+  </body>
+</html>

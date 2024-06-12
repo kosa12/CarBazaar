@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Settings</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="topNav">
+      <a href="/">Home</a>
+
+      <div class="topNav-right">
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+    <h1>User Settings</h1>
+    <% if (userSettings) { %>
+    <h2>Welcome, <%= userSettings.username %>!</h2>
+
+    <h3>Change Username:</h3>
+    <form id="usernameForm" action="/user/<%= userSettings.id %>/settings/username" method="POST">
+      <div>
+        <label for="newUsername">New Username:</label>
+        <input type="text" id="newUsername" name="newUsername" required />
+      </div>
+      <div>
+        <button type="submit">Change Username</button>
+      </div>
+    </form>
+
+    <h3>Change Password:</h3>
+    <form id="passwordForm" action="/user/<%= userSettings.id %>/settings/password" method="POST">
+      <div>
+        <label for="currentPassword">Current Password:</label>
+        <input type="password" id="currentPassword" name="currentPassword" required />
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required />
+      </div>
+      <div>
+        <button type="submit">Change Password</button>
+      </div>
+    </form>
+    <% } else { %>
+    <p>User settings not found.</p>
+    <% } %>
+
+    <script src="/updateUsername.js"></script>
+  </body>
+</html>

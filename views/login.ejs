@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/login_style.css" />
+    <style>
+      .error {
+        color: red;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topNav">
+      <a href="/" class="navbar-A">Home</a>
+      <div class="topNav-right"><a href="/signup" class="navbar-A">Sign Up</a></div>
+    </div>
+
+    <div class="container">
+      <div class="form_area">
+        <p class="title">LOGIN</p>
+        <form id="loginForm">
+          <div class="form_group">
+            <label class="sub_title" for="username">Username</label>
+            <input
+              placeholder="Enter your full name"
+              class="form_style"
+              type="text"
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="form_group">
+            <label class="sub_title" for="password">Password</label>
+            <input
+              placeholder="Enter your password"
+              class="form_style"
+              type="password"
+              id="password"
+              name="password"
+              required
+            />
+          </div>
+          <div>
+            <button class="btn" type="submit">LOGIN</button>
+            <p>Don't have an Account? <a class="link" href="/signup">Sign up Here!</a></p>
+          </div>
+        </form>
+        <p id="errorMessage" class="error">Invalid username or password</p>
+      </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
+    <script src="/login.js"></script>
+  </body>
+</html>

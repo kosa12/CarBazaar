@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/login_style.css" />
+    <style>
+      .error {
+        color: red;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topNav">
+      <a href="/" class="navbar-A">Home</a>
+      <div class="topNav-right"><a href="/login" class="navbar-A">Login</a></div>
+    </div>
+
+    <div class="container">
+      <div class="form_area">
+        <p class="title">SIGN UP</p>
+        <form id="signupForm">
+          <div class="form_group">
+            <label class="sub_title" for="username">Username</label>
+            <input
+              placeholder="Enter your full name"
+              class="form_style"
+              type="text"
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="form_group">
+            <label class="sub_title" for="password">Password</label>
+            <input
+              placeholder="Enter your password"
+              class="form_style"
+              type="password"
+              id="password"
+              name="password"
+              required
+            />
+          </div>
+          <div class="form_group">
+            <label class="sub_title" for="confirmPassword">Confirm Password</label>
+            <input
+              placeholder="Enter your password again"
+              class="form_style"
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+          </div>
+          <div>
+            <button class="btn" type="submit">SIGN UP</button>
+            <p>Have an Account? <a class="link" href="/login">Login Here!</a></p>
+          </div>
+        </form>
+        <p id="errorMessage" class="error">Error message</p>
+      </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
+    <script src="/signup.js"></script>
+  </body>
+</html>

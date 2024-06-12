@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Advertisement Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="topNav">
+      <div class="topNav-centered">
+        <% if (user) { %>
+        <a href="/user/<%=user.id%>"><%= user.username %></a>
+        <% } %>
+      </div>
+
+      <a href="/">Home</a>
+
+      <div class="topNav-right">
+        <% if (user) { %>
+        <a href="/logout">Logout</a>
+        <% } else { %>
+
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="search">
+      <form action="/search" method="GET">
+        <div class="title">Search Advertisements</div>
+        <input type="text" id="searchBrand" name="brand" required="" placeholder="Brand" class="input" />
+
+        <br /><br />
+
+        <input type="text" id="searchCity" name="city" required="" placeholder="City" class="input" />
+
+        <br /><br />
+
+        <input
+          type="text"
+          id="minPrice"
+          name="minPrice"
+          min="0"
+          required=""
+          placeholder="Minimum Price"
+          class="input"
+        />
+
+        <br /><br />
+
+        <input
+          type="text"
+          id="maxPrice"
+          name="maxPrice"
+          min="0"
+          required=""
+          placeholder="Maximum Price"
+          class="input"
+        />
+
+        <br /><br />
+
+        <button type="submit" class="button-confirm">Search</button>
+      </form>
+    </div>
+
+    <h1>Advertisements List</h1>
+    <div id="advertisementsList">
+      <% advertisements.forEach(ad => { %>
+      <div class="advertisement">
+        <% if (ad.imageUrl) { %>
+        <img src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
+        <% } %>
+        <h3 class="carBrand"><%= ad.brand %></h3>
+        <p class="carPrice">Price: $<%= ad.price %></p>
+        <p class="city">City: <%= ad.city %></p>
+        <br />
+        <div id="wrapper"><a href="/advertisement/<%= ad.id%>" class="view-full">View Full Details</a></div>
+        <div id="wrapper">
+          <br />
+          <button class="view-details" data-id="<%= ad.id %>">View More Info</button>
+        </div>
+
+        <div class="extra-details" id="details-<%= ad.id %>"></div>
+      </div>
+      <% }); %>
+    </div>
+
+    <% if (user) { %> <%- include('partials/add_ads.ejs') %> <% } %>
+    <script src="/ajax_details.js"></script>
+
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>

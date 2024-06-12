@@ -1,0 +1,12 @@
+check:
+  image: node:20.10.0-alpine
+  script:
+    - npm i
+    - npx html-validate --max-warnings=0 .
+    - npx eslint --max-warnings=0 .
+  cache:
+    - key:
+        files:
+          - package-lock.json
+      paths:
+        - node_modules/

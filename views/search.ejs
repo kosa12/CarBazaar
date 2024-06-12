@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Search Results</title>
+  </head>
+  <body>
+    <h1>Search Results:</h1>
+
+    <% if (advertisements.length === 0) { %>
+    <p>No advertisements found matching the search criteria.</p>
+    <% } else { %>
+    <div id="advertisementsList">
+      <% advertisements.forEach(ad => { %>
+      <div class="advertisement">
+        <% if (ad.imageUrl) { %>
+        <img src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
+        <% } %>
+        <h3 class="carBrand"><%= ad.brand %></h3>
+        <p class="carPrice">Price: $<%= ad.price %></p>
+        <p class="city">City: <%= ad.city %></p>
+        <br />
+        <div id="wrapper"><a href="/advertisement/<%= ad.id%>" class="view-full">View Full Details</a></div>
+        <div class="extra-details" id="details-<%= ad.id %>"></div>
+      </div>
+      <% }); %>
+    </div>
+    <% } %> <%- include('partials/footer.ejs') %>
+  </body>
+</html>

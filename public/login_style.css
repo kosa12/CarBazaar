@@ -1,0 +1,125 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 10%;
+}
+
+.form_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #e2dfd0;
+  height: auto;
+  width: auto;
+  border: 2px solid #264143;
+  border-radius: 20px;
+  box-shadow: 3px 4px 0px 1px #32012f;
+}
+
+.title {
+  color: #264143;
+  font-weight: 900;
+  font-size: 1.5em;
+  margin-top: 20px;
+}
+
+.sub_title {
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 10px;
+}
+
+.form_style {
+  outline: none;
+  border: 2px solid #264143;
+  box-shadow: 3px 4px 0px 1px #32012f;
+  width: 290px;
+  padding: 12px 10px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.form_style:focus,
+.btn:focus {
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px #524c42;
+}
+
+.btn {
+  padding: 15px;
+  margin: 25px 0px;
+  width: 290px;
+  font-size: 15px;
+  color: #e2dfd0;
+  background: #524c42;
+  border-radius: 10px;
+  font-weight: 800;
+  box-shadow: 3px 3px 0px 0px #32012f;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.link {
+  font-weight: 800;
+  color: #264143;
+  padding: 5px;
+}
+
+.topNav {
+  position: relative;
+  border: 3px solid #32012f;
+  border-radius: 10px;
+  background-color: #e2dfd0;
+  overflow: hidden;
+}
+
+.topNav-centered a {
+  border-radius: 10px;
+  box-shadow: #2f022b 0 0 10px;
+  float: none;
+  pointer-events: none;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  color: white;
+  transform: translate(-50%, -50%);
+}
+
+.topNav-right {
+  float: right;
+}
+
+.navbar-A {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  margin: 15px;
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #32012f;
+  font-size: 17px;
+}
+
+.navbar-A:hover {
+  background-color: #85117d;
+  color: #f2f2f2;
+}
+
+footer {
+  text-align: center;
+  margin-top: 130px;
+  color: #32012f;
+}
