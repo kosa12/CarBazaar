@@ -1,10 +1,9 @@
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.delete-image').forEach((button) => {
     button.addEventListener('click', async (event) => {
       const imageDiv = event.target.closest('.image');
       const adID = imageDiv.getAttribute('data-id');
       const imageID = adID.split('/')[2];
-
       try {
         const response = await fetch(`/advertisement/${imageID}`, {
           method: 'DELETE',
@@ -26,4 +25,4 @@ window.onload = () => {
       }
     });
   });
-};
+});
