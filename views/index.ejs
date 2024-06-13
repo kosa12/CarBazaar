@@ -2,94 +2,70 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Advertisement Management</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>CarBazaar</title>
+    <link rel="stylesheet" href="/output.css" />
   </head>
-  <body>
-    <div class="topNav">
-      <div class="topNav-centered">
-        <% if (user) { %>
-        <a href="/user/<%=user.id%>"><%= user.username %></a>
-        <% } %>
+  <body class="bg-background font-Courier">
+    <%- include('partials/header.ejs', {user: user}) %>
+
+    <div class="container mx-auto px-4">
+      <div class="welcome-text mt-16 pt-12 text-3xl">
+        <h1>Welcome to <span class="name-h text-navbarborder font-extrabold">CarBazaar</span>...</h1>
+        <p>Find the best deals on cars in your city!</p>
       </div>
 
-      <a href="/">Home</a>
+      <a name="search"></a>
+      <br />
 
-      <div class="topNav-right">
-        <% if (user) { %>
-        <a href="/logout">Logout</a>
-        <% } else { %>
+      <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Search Advertisements:</div>
+      <%- include('partials/homesearch.ejs') %>
+      <a name="advertisementsListO"></a>
+      <br />
 
-        <a href="/login">Login</a>
-        <a href="/signup">Sign Up</a>
-        <% } %>
-      </div>
-    </div>
+      <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Advertisement List:</div>
 
-    <div class="search">
-      <form action="/search" method="GET">
-        <div class="title">Search Advertisements</div>
-        <input type="text" id="searchBrand" name="brand" required="" placeholder="Brand" class="input" />
-
-        <br /><br />
-
-        <input type="text" id="searchCity" name="city" required="" placeholder="City" class="input" />
-
-        <br /><br />
-
-        <input
-          type="text"
-          id="minPrice"
-          name="minPrice"
-          min="0"
-          required=""
-          placeholder="Minimum Price"
-          class="input"
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          id="maxPrice"
-          name="maxPrice"
-          min="0"
-          required=""
-          placeholder="Maximum Price"
-          class="input"
-        />
-
-        <br /><br />
-
-        <button type="submit" class="button-confirm">Search</button>
-      </form>
-    </div>
-
-    <h1>Advertisements List</h1>
-    <div id="advertisementsList">
-      <% advertisements.forEach(ad => { %>
-      <div class="advertisement">
-        <% if (ad.imageUrl) { %>
-        <img src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
-        <% } %>
-        <h3 class="carBrand"><%= ad.brand %></h3>
-        <p class="carPrice">Price: $<%= ad.price %></p>
-        <p class="city">City: <%= ad.city %></p>
-        <br />
-        <div id="wrapper"><a href="/advertisement/<%= ad.id%>" class="view-full">View Full Details</a></div>
-        <div id="wrapper">
-          <br />
-          <button class="view-details" data-id="<%= ad.id %>">View More Info</button>
+      <div id="advertisementsList" class="flex flex-wrap justify-center gap-6 p-6 bg-transparent">
+        <% advertisements.forEach(ad => { %>
+        <div
+          class="advertisement advertisement w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 bg-white border border-gray-300 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+        >
+          <div class="relative overflow-hidden h-48">
+            <% if (ad.imageUrl) { %>
+            <img class="object-cover w-full h-full" src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
+            <% } else { %>
+            <img class="object-cover w-full h-full" src="/icons/car.png" alt="<%= ad.brand %>" />
+            <% } %>
+          </div>
+          <div class="text-center mt-8">
+            <h3 class="text-2xl font-extrabold text-purple-900"><%= ad.brand %></h3>
+            <p class="text-xl font-bold text-orange-500">Price: $<%= ad.price %></p>
+            <p class="text-xl font-bold text-purple-900">City: <%= ad.city %></p>
+            <div class="mt-4">
+              <a
+                href="/advertisement/<%= ad.id %>"
+                class="block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                >View Full Details</a
+              >
+              <button
+                data-id="<%= ad.id %>"
+                class="view-details mt-2 block bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md"
+              >
+                View More Info
+              </button>
+              <div class="extra-details" id="details-<%=ad.id%>"></div>
+            </div>
+          </div>
         </div>
-
-        <div class="extra-details" id="details-<%= ad.id %>"></div>
+        <% }); %>
       </div>
-      <% }); %>
+
+      <% if (user) { %> <%- include('partials/add_ads.ejs') %> <% } %>
     </div>
 
-    <% if (user) { %> <%- include('partials/add_ads.ejs') %> <% } %>
-    <script src="/ajax_details.js"></script>
-
+    <a name="add"></a>
     <%- include('partials/footer.ejs') %>
+
+    <script src="/js/ajax_details.js" defer></script>
+    <script src="/js/dropdownuser.js" async></script>
   </body>
 </html>

@@ -1,0 +1,214 @@
+<div class="search top-50 flex justify-center">
+  <form
+    action="/search"
+    method="GET"
+    class="border-navbarbackground border-4 px-7 pt-4 pb-4 w-full sm:w-8/12 md:w-6/12 lg:w-8/12 rounded-lg bg-navbarhover"
+  >
+    <!-- First Row -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          name="brand"
+          id="searchBrand"
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+          placeholder=" "
+        />
+        <label
+          for="brand"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Brand</label
+        >
+      </div>
+
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          name="city"
+          id="searchCity"
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+          placeholder=" "
+        />
+        <label
+          for="city"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >City</label
+        >
+      </div>
+
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          name="minPrice"
+          id="minPrice"
+          min="0"
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+          placeholder=" "
+        />
+        <label
+          for="minPrice"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Minimum Price</label
+        >
+      </div>
+
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          name="maxPrice"
+          id="maxPrice"
+          min="0"
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+          placeholder=" "
+        />
+        <label
+          for="maxPrice"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Maximum Price</label
+        >
+      </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="relative z-0 mb-5 group">
+        <label for="fuelType" class="absolute text-sm text-background mt-1">Fuel Type</label>
+        <select
+          name="fuelType"
+          id="fuelType"
+          class="bg-navbarborder mt-5 text-background text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        >
+          >
+          <option value="" disabled selected></option>
+          <option value="diesel">Diesel</option>
+          <option value="petrol">Petrol</option>
+          <option value="electric">Electric</option>
+          <option value="hybrid">Hybrid</option>
+        </select>
+      </div>
+
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          name="year"
+          id="year"
+          min="1950"
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+          placeholder=" "
+        />
+        <label
+          for="year"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Year (Newer than)</label
+        >
+      </div>
+    </div>
+
+    <!-- Third Row -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="relative z-0 mb-5 group">
+        <label for="transmission" class="absolute text-sm text-background mt-1">Transmission</label>
+        <select
+          name="transmission"
+          id="transmission"
+          class="bg-navbarborder mt-5 text-background text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        >
+          >
+          <option value="" disabled selected></option>
+          <option value="automatic">Automatic</option>
+          <option value="manual">Manual</option>
+        </select>
+      </div>
+
+      <div class="relative z-0 mb-5 group">
+        <label for="condition" class="absolute text-sm text-background mt-1">Condition</label>
+        <select
+          name="condition"
+          id="condition"
+          class="bg-navbarborder mt-5 text-background text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        >
+          >
+          <option value="" disabled selected></option>
+          <option value="new">New</option>
+          <option value="used">Used</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fourth Row -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="relative z-0 mb-5 group">
+        <label for="bodyType" class="absolute text-sm text-background mt-1">Body Type</label>
+        <select
+          name="bodyType"
+          id="bodyType"
+          class="bg-navbarborder mt-5 text-background text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        >
+          >
+          <option value="" disabled selected></option>
+          <option value="sedan">Sedan</option>
+          <option value="suv">SUV</option>
+          <option value="hatchback">Hatchback</option>
+          <option value="coupe">Coupe</option>
+          <option value="convertible">Convertible</option>
+          <option value="wagon">Wagon</option>
+          <option value="van">Van</option>
+          <option value="truck">Truck</option>
+        </select>
+      </div>
+
+      <div class="relative z-0 mb-5 group">
+        <label for="color" class="absolute text-sm text-background mt-1">Color</label>
+        <select
+          name="color"
+          id="color"
+          class="bg-navbarborder mt-5 text-background text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        >
+          >
+          <option value="" disabled selected></option>
+          <option value="black">Black</option>
+          <option value="white">White</option>
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <option value="yellow">Yellow</option>
+          <option value="orange">Orange</option>
+          <option value="purple">Purple</option>
+          <option value="pink">Pink</option>
+          <option value="brown">Brown</option>
+          <option value="gray">Gray</option>
+          <option value="silver">Silver</option>
+          <option value="gold">Gold</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fifth Row -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          name="kilometers"
+          id="kilometers"
+          min="0"
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+          placeholder=" "
+        />
+        <label
+          for="kilometers"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Kilometers Used</label
+        >
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-10">
+      <button
+        type="submit"
+        class="text-background border border-navbarhoverborder hover:bg-background focus:ring-4 focus:outline-none hover:ring-navbarborder hover:text-navbarhover font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+      >
+        Search
+      </button>
+    </div>
+  </form>
+</div>

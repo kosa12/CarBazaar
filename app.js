@@ -13,7 +13,7 @@ import logoutRoute from './routes/logout.js';
 import userRoutes from './routes/user.js';
 
 const app = express();
-const PORT = 5500;
+const PORT = 5000;
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 

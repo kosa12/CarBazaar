@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     return res.status(400).send('Invalid minPrice');
   }
 
-  if (minPrice && Number.isNaN(parsedMaxPrice)) {
+  if (maxPrice && Number.isNaN(parsedMaxPrice)) {
     return res.status(400).send('Invalid maxPrice');
   }
 

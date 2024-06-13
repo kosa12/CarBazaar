@@ -33,12 +33,8 @@
     <p>Date: <%= advertisement.date %></p>
     <p>Owner: <%= advertisement.username %></p>
     <% advertisement.images.forEach(image => { %>
-    <div class="image" data-id="<%= image.url %>" z>
-      <img
-        src="<%= image.url %>"
-        alt="Image for <%= advertisement.brand %>"
-        style="max-width: 400px; max-height: 400px"
-      />
+    <div class="image image-details" data-id="<%= image.url %>" z>
+      <img src="<%= image.url %>" alt="Image for <%= advertisement.brand %>" class="ad-detail-img" />
       <% if (user && user.username === advertisement.username) { %>
       <button class="delete-image">Delete</button>
       <% } %>
@@ -47,6 +43,6 @@
     <% }) %> <% if (user && user.username === advertisement.username) { %>
     <h3>Upload a new image</h3>
     <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %> <%- include('partials/footer.ejs') %>
-    <script src="/ajax_delete.js"></script>
+    <script src="/js/ajax_delete.js"></script>
   </body>
 </html>

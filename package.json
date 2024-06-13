@@ -3,21 +3,28 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
+    "autoprefixer": "^10.4.19",
     "eslint": "8.37.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "4.2.1",
     "html-validate": "8.9.1",
-    "prettier": "2.8.7"
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "prettier": "2.8.7",
+    "tailwindcss": "^3.4.4",
+    "watch": "^0.13.0"
   },
   "dependencies": {
+    "@preline/dropdown": "^2.3.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "flowbite": "^2.3.0",
     "glob": "^10.3.12",
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.3.0",
@@ -25,5 +32,8 @@
     "mysql2": "^3.9.7",
     "nodemon": "^3.1.0",
     "uuid": "^9.0.1"
+  },
+  "scripts": {
+    "build": "tailwindcss -i css/style.css -o public/output.css --watch"
   }
 }

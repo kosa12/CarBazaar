@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password.' });
     }
 
-    const token = jwt.sign({ userId: user.id }, jwtSecretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id }, jwtSecretKey, { expiresIn: '24h' });
 
     res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
     return res.status(200).json({ message: 'Login successful' });

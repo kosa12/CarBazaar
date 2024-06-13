@@ -46,6 +46,8 @@ rules:
   no-duplicate-imports: error
   prettier/prettier: warn
 
+"import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+
 overrides:
   - files:
       - "public/**/*"

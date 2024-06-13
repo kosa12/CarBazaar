@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
     const userId = result.insertId;
 
-    const token = jwt.sign({ userId }, jwtSecretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ userId }, jwtSecretKey, { expiresIn: '24h' });
 
     res.cookie('token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
 
