@@ -9,29 +9,6 @@
       >
     </a>
 
-    <!-- Navigation links -->
-    <div class="hidden md:flex md:justify-center md:flex-grow md:items-center md:order-2">
-      <ul class="flex mr-32 flex-col md:flex-row md:space-x-8">
-        <li>
-          <a href="#search" class="hover:text-navbarhoverborder text-background duration-300 transition-colors"
-            >Search</a
-          >
-        </li>
-        <li>
-          <a
-            href="#advertisementsListO"
-            class="hover:text-navbarhoverborder text-background duration-300 transition-colors"
-            >Advertisements</a
-          >
-        </li>
-        <li>
-          <a href="#add" class="hover:text-navbarhoverborder text-background duration-300 transition-colors"
-            >Add Advertisement</a
-          >
-        </li>
-      </ul>
-    </div>
-
     <!-- User dropdown -->
     <% if (user) { %>
     <div class="relative ml-auto md:ml-0 md:order-3">
@@ -48,9 +25,6 @@
         id="dropdownAvatar"
         class="z-10 hidden bg-navbarhover divide-y divide-navbarhoverborder rounded-lg shadow w-44 absolute right-0 mt-2"
       >
-        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-          <div><%= user.username %></div>
-        </div>
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
           <li>
             <a

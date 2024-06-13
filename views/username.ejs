@@ -4,46 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Used Car Dealership</title>
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/output.css" />
   </head>
-  <body>
-    <div class="topNav">
-      <a href="/">Home</a>
+  <body class="bg-background font-Courier">
+    <%- include('partials/headerForOtherPages.ejs', { user: user }) %>
 
-      <div class="topNav-right">
-        <a href="/logout">Logout</a>
-        <a href="/user/<%= user.id %>/settings">Settings</a>
-      </div>
-    </div>
-    <main>
-      <h1>Welcome, <%= user.username %>!</h1>
-      <h2>Here are the cars you have posted:</h2>
-      <div id="advertisementsList">
-        <% advertisements.forEach(ad => { %>
-        <div class="advertisement">
-          <% if (ad.imageUrl) { %>
-          <img src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
-          <% } %>
-          <h3 class="carBrand"><%= ad.brand %></h3>
-          <p class="carPrice">Price: $<%= ad.price %></p>
-          <p class="city">City: <%= ad.city %></p>
-          <br />
-          <div id="wrapper"><a href="/advertisement/<%= ad.id%>" class="view-full">View Full Details</a></div>
-          <div id="wrapper">
-            <br />
-            <button class="view-details" data-id="<%= ad.id %>">View More Info</button>
+    <div class="container mx-auto px-4 mt-24">
+      <main>
+        <div class="title mb-4 text-4xl font-semibold text-center">Welcome, <%= user.username %>!</div>
+        <div class="title mt-10 text-2xl font-semibold text-center">Here are the cars you have posted:</div>
+        <div id="advertisementsList" class="mb-10 flex flex-wrap justify-center gap-10 p-4 bg-transparent">
+          <% advertisements.forEach(ad => { %>
+          <div
+            class="advertisement advertisement w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-6 bg-navbarborder border-4 border-navbarbackground rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+          >
+            <div class="relative overflow-hidden h-48">
+              <% if (ad.imageUrl) { %>
+              <img
+                class="object-cover w-full h-full border-2 border-background rounded-lg"
+                src="<%= ad.imageUrl %>"
+                alt="<%= ad.brand %>"
+              />
+              <% } else { %>
+              <img
+                class="object-cover w-full h-full border-2 border-background rounded-lg"
+                src="/icons/car.png"
+                alt="<%= ad.brand %>"
+              />
+              <% } %>
+            </div>
+            <div class="text-center mt-8">
+              <h3 class="text-2xl font-extrabold text-background"><%= ad.brand %></h3>
+              <p class="text-xl font-bold text-navbarhoverborder">Price: $<%= ad.price %></p>
+              <p class="text-xl font-bold text-background">City: <%= ad.city %></p>
+              <div class="mt-4">
+                <button
+                  data-id="<%= ad.id %>"
+                  class="w-full view-details mt-2 block border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+                >
+                  View Extra Info
+                </button>
+                <div class="extra-details mt-3 text-background" id="details-<%=ad.id%>"></div>
+              </div>
+              <a
+                href="/advertisement/<%= ad.id %>"
+                class="w-full mt-2 block border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+                >View Advertisement</a
+              >
+            </div>
+            <div class="flex justify-center mt-10 gap-6">
+              <div
+                class="flex flex-col items-center hover:scale-125 hover: transform transition-transform mr-8 duration-300"
+              >
+                <img src="/icons/heart.png" alt="Heart Icon" class="h-8 w-8" />
+              </div>
+              <div class="flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
+                <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
+              </div>
+            </div>
           </div>
-
-          <div class="extra-details" id="details-<%= ad.id %>"></div>
+          <% }); %>
         </div>
-        <% }); %>
-      </div>
 
-      <%- include('partials/add_ads.ejs') %>
-    </main>
-    <footer>
-      <p>&copy; 2024 Used Car Dealership. All rights reserved.</p>
-    </footer>
-    <script src="/ajax_details.js"></script>
+        <%- include('partials/add_ads.ejs') %>
+      </main>
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+    <script src="/js/ajax_details.js"></script>
+    <script src="/js/dropdownuser.js"></script>
   </body>
 </html>

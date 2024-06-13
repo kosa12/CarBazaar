@@ -1,17 +1,82 @@
-<div class="search"></div>
-        <form action="/ad" method="POST">
-          <div class="title">Add Advertisement</div>
-          <input type="text" id="brand" name="brand" required class="input" placeholder="Brand" />
+<div class="search top-50 flex justify-center mb-50">
+  <form
+    action="/ad"
+    method="POST"
+    class="border-navbarbackground border-4 px-7 pt-4 pb-4 w-full sm:w-8/12 md:w-6/12 lg:w-8/12 rounded-lg bg-navbarhover"
+  >
+    <div class="grid grid-cols-1 gap-4">
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          id="brand"
+          name="brand"
+          required
+          placeholder=" "
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        />
+        <label
+          for="brand"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Brand</label
+        >
+      </div>
 
-          <br />
-          <input type="text" id="city" name="city" required class="input" placeholder="City" />
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          id="city"
+          name="city"
+          required
+          placeholder=" "
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        />
+        <label
+          for="city"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >City</label
+        >
+      </div>
 
-          <br />
-          <input type="text" id="price" name="price" required class="input" placeholder="Price" />
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="text"
+          id="price"
+          name="price"
+          required
+          placeholder=" "
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        />
+        <label
+          for="price"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Price</label
+        >
+      </div>
 
-          <br />
-          <input type="date" id="date" name="date" required class="input" />
-          <br />
-          <button type="submit">Create Advertisement</button>
-        </form>
+      <div class="relative z-0 mb-5 group">
+        <input
+          type="date"
+          id="date"
+          name="date"
+          required
+          placeholder=" "
+          class="input block py-2.5 px-0 w-full text-sm text-background bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-navbarborder peer"
+        />
+        <label
+          for="date"
+          class="peer-focus:font-medium absolute text-sm text-background duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-navbarhoverborder peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Date</label
+        >
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-6">
+      <button
+        type="submit"
+        class="text-background border border-navbarhoverborder hover:bg-background focus:ring-4 focus:outline-none hover:ring-navbarborder hover:text-navbarhover font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      >
+        Create Advertisement
+      </button>
+    </div>
+  </form>
 </div>

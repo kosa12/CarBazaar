@@ -24,45 +24,65 @@
 
       <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Advertisement List:</div>
 
-      <div id="advertisementsList" class="flex flex-wrap justify-center gap-6 p-6 bg-transparent">
+      <div id="advertisementsList" class="flex flex-wrap justify-center gap-10 p-4 bg-transparent">
         <% advertisements.forEach(ad => { %>
         <div
-          class="advertisement advertisement w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 bg-white border border-gray-300 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+          class="advertisement advertisement w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-6 bg-navbarborder border-4 border-navbarbackground rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
         >
           <div class="relative overflow-hidden h-48">
             <% if (ad.imageUrl) { %>
-            <img class="object-cover w-full h-full" src="<%= ad.imageUrl %>" alt="<%= ad.brand %>" />
+            <img
+              class="object-cover w-full h-full border-2 border-background rounded-lg"
+              src="<%= ad.imageUrl %>"
+              alt="<%= ad.brand %>"
+            />
             <% } else { %>
-            <img class="object-cover w-full h-full" src="/icons/car.png" alt="<%= ad.brand %>" />
+            <img
+              class="object-cover w-full h-full border-2 border-background rounded-lg"
+              src="/icons/car.png"
+              alt="<%= ad.brand %>"
+            />
             <% } %>
           </div>
           <div class="text-center mt-8">
-            <h3 class="text-2xl font-extrabold text-purple-900"><%= ad.brand %></h3>
-            <p class="text-xl font-bold text-orange-500">Price: $<%= ad.price %></p>
-            <p class="text-xl font-bold text-purple-900">City: <%= ad.city %></p>
+            <h3 class="text-2xl font-extrabold text-background"><%= ad.brand %></h3>
+            <p class="text-xl font-bold text-navbarhoverborder">Price: $<%= ad.price %></p>
+            <p class="text-xl font-bold text-background">City: <%= ad.city %></p>
             <div class="mt-4">
-              <a
-                href="/advertisement/<%= ad.id %>"
-                class="block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-                >View Full Details</a
-              >
               <button
                 data-id="<%= ad.id %>"
-                class="view-details mt-2 block bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md"
+                class="w-full view-details mt-2 block border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
               >
-                View More Info
+                View Extra Info
               </button>
-              <div class="extra-details" id="details-<%=ad.id%>"></div>
+              <div class="extra-details mt-3 text-background" id="details-<%=ad.id%>"></div>
+            </div>
+            <a
+              href="/advertisement/<%= ad.id %>"
+              class="w-full mt-2 block border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+              >View Advertisement</a
+            >
+          </div>
+          <div class="flex justify-center mt-10 gap-6">
+            <div
+              class="flex flex-col items-center hover:scale-125 hover: transform transition-transform mr-8 duration-300"
+            >
+              <img src="/icons/heart.png" alt="Heart Icon" class="h-8 w-8" />
+            </div>
+            <div class="flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
+              <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
             </div>
           </div>
         </div>
         <% }); %>
       </div>
-
+      <br />
+      <br class="mt-20" />
+      <a name="add"></a>
+      <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Create NEW Advertisement for your car!</div>
       <% if (user) { %> <%- include('partials/add_ads.ejs') %> <% } %>
     </div>
 
-    <a name="add"></a>
     <%- include('partials/footer.ejs') %>
 
     <script src="/js/ajax_details.js" defer></script>

@@ -3,46 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <title>Advertisement Details</title>
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/output.css" />
   </head>
-  <body>
-    <div class="topNav">
-      <div class="topNav-centered">
-        <% if (user) { %>
-        <a><%= user.username %></a>
-        <% } %>
+  <body class="bg-background font-Courier">
+    <%- include('partials/headerForOtherPages.ejs', { user: user }) %>
+
+    <div class="container mx-auto px-4 mt-16">
+      <br />
+      <br />
+      <div class="title mb-4 text-2xl font-semibold text-center">Advertisement Details:</div>
+      <div class="overflow-hidden rounded-2xl border-4 border-navbarbackground mb-10">
+        <table class="w-full mb-8">
+          <tbody>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Brand:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.brand %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">City:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.city %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Price:</td>
+              <td class="text-xl px-4 py-2">$<%= advertisement.price %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Date:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.date %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Owner:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.username %></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <a href="/">Home</a>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <% advertisement.images.forEach(image => { %>
+        <div
+          class="relative mb-20 image image-details border-4 border-navbarbackground rounded-lg overflow-hidden max-w-80 max-h-80"
+          data-id="<%= image.url %>"
+        >
+          <img
+            src="<%= image.url %>"
+            alt="Image for <%= advertisement.brand %>"
+            class="ad-detail-img image w-full h-full"
+          />
 
-      <div class="topNav-right">
-        <% if (user) { %>
-        <a href="/logout">Logout</a>
-        <% } else { %>
-
-        <a href="/login">Login</a>
-        <a href="/signup">Sign Up</a>
-        <% } %>
+          <% if (user && user.username === advertisement.username) { %>
+          <button
+            class="absolute inset-0 delete-image bg-black bg-opacity-50 text-white text-sm flex items-center justify-center transition duration-300 opacity-0 hover:opacity-100"
+          >
+            Delete
+          </button>
+          <% } %>
+        </div>
+        <% }) %>
       </div>
-    </div>
-
-    <h1>Advertisement Details</h1>
-    <h2><%= advertisement.brand %></h2>
-    <p>City: <%= advertisement.city %></p>
-    <p>Price: $<%= advertisement.price %></p>
-    <p>Date: <%= advertisement.date %></p>
-    <p>Owner: <%= advertisement.username %></p>
-    <% advertisement.images.forEach(image => { %>
-    <div class="image image-details" data-id="<%= image.url %>" z>
-      <img src="<%= image.url %>" alt="Image for <%= advertisement.brand %>" class="ad-detail-img" />
       <% if (user && user.username === advertisement.username) { %>
-      <button class="delete-image">Delete</button>
-      <% } %>
+      <div class="title mb-4 mt-10 text-2xl font-semibold">Upload a new image</div>
+      <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %>
     </div>
 
-    <% }) %> <% if (user && user.username === advertisement.username) { %>
-    <h3>Upload a new image</h3>
-    <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %> <%- include('partials/footer.ejs') %>
+    <%- include('partials/footer.ejs') %>
+
     <script src="/js/ajax_delete.js"></script>
+    <script src="/js/dropdownuser.js" defer></script>
   </body>
 </html>
