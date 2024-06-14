@@ -1,4 +1,4 @@
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
   const signupForm = document.getElementById('signupForm');
   const errorMessage = document.getElementById('errorMessage');
 
@@ -24,8 +24,12 @@ window.onload = () => {
 
       window.location.href = '/';
     } catch (error) {
-      errorMessage.textContent = error.message;
-      errorMessage.style.display = 'block';
+      if (errorMessage) {
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+      } else {
+        console.error('Error message element not found:', error);
+      }
     }
   });
-};
+});

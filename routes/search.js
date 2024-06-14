@@ -1,11 +1,23 @@
 import express from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import pool from '../db/connection.js';
 import { getAdvertisementImage } from '../utils/advertisementUtils.js';
 
 const router = express.Router();
 
+dotenv.config({ path: './config/secret.env' });
+
+const jwtSecretKey = process.env.JWT_SECRET_KEY;
+
 router.get('/', async (req, res) => {
   const { brand, city, minPrice, maxPrice } = req.query;
+  const token = req.cookies.token;
+  const decoded = jwt.verify(token, jwtSecretKey);
+  const { userId } = decoded;
+  let query = 'SELECT * FROM felhasznalo WHERE id = ?';
+  const [userResult] = await pool.execute(query, [userId]);
+  const user = userResult[0];
 
   const parsedMinPrice = parseFloat(minPrice);
   const parsedMaxPrice = parseFloat(maxPrice);
@@ -51,7 +63,7 @@ router.get('/', async (req, res) => {
       })),
     );
 
-    return res.render('search', { advertisements });
+    return res.render('search_result', { advertisements, user });
   } catch (error) {
     console.error('Error searching advertisements:', error);
     return res.status(500).send('Internal Server Error');

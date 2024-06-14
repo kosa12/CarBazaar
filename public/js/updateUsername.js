@@ -1,4 +1,4 @@
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
   const usernameForm = document.getElementById('usernameForm');
 
   usernameForm.addEventListener('submit', async (event) => {
@@ -6,6 +6,7 @@ window.onload = () => {
 
     const newUsername = document.getElementById('newUsername').value;
     const userId = usernameForm.action.split('/').slice(-3, -2)[0];
+
     try {
       const response = await fetch(`/user/${userId}/settings/username`, {
         method: 'POST',
@@ -32,4 +33,4 @@ window.onload = () => {
       alert('An error occurred while updating the username.');
     }
   });
-};
+});

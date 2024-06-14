@@ -201,10 +201,11 @@
         >
       </div>
     </div>
-
+    <% if(user) { %>
     <div class="flex justify-center mt-10">
       <button
         type="submit"
+        user-id="<%= user.id%>"
         class="text-background border border-navbarhoverborder hover:bg-background focus:ring-4 focus:outline-none hover:ring-navbarborder hover:text-navbarhover font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center"
       >
         Search
@@ -216,5 +217,6 @@
         </svg>
       </button>
     </div>
+    <% } %>
   </form>
 </div>

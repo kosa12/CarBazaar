@@ -4,47 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Settings</title>
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/output.css" />
   </head>
-  <body>
-    <div class="topNav">
-      <a href="/">Home</a>
+  <body class="bg-background font-Courier">
+    <%- include('partials/headerForOtherPages.ejs', { user: userSettings }) %>
 
-      <div class="topNav-right">
-        <a href="/logout">Logout</a>
+    <div class="container mx-auto px-4 mt-24">
+      <% if (userSettings) { %>
+      <div class="title mb-4 text-4xl font-semibold text-center">Welcome, <%= userSettings.username %>!</div>
+
+      <div class="border-2 rounded-lg border-navbarborder px-4 mt-5 max-w-md mx-auto">
+        <div class="title mt-5 mb-4 text-xl font-semibold">Change Username:</div>
+
+        <form id="usernameForm" action="/user/<%= userSettings.id %>/settings/username" method="POST">
+          <div class="mb-4 flex items-center">
+            <label for="newUsername" class="block text-lg font-medium text-navbarborder mr-5">New Username:</label>
+            <input
+              type="text"
+              id="newUsername"
+              name="newUsername"
+              required
+              class="block px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background flex-grow"
+            />
+            <button
+              type="submit"
+              class="ml-2 border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+            >
+              Change Username
+            </button>
+          </div>
+        </form>
       </div>
+
+      <div class="mt-8 border-2 rounded-lg border-navbarborder px-4 py-6">
+        <div class="title mb-4 text-xl font-semibold">Change Password:</div>
+
+        <form id="passwordForm" action="/user/<%= userSettings.id %>/settings/password" method="POST">
+          <div class="mb-4 flex items-center">
+            <div class="w-1/2 mr-5">
+              <label for="currentPassword" class="block text-lg font-medium text-navbarborder mb-2"
+                >Current Password:</label
+              >
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                required
+                class="block px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background w-full"
+              />
+            </div>
+            <div class="w-1/2">
+              <label for="newPassword" class="block text-lg font-medium text-navbarborder mb-2">New Password:</label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                required
+                class="block px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background w-full"
+              />
+            </div>
+          </div>
+
+          <div class="flex justify-end mt-4">
+            <button
+              type="submit"
+              class="view-details border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+            >
+              Change Password
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <% } else { %>
+      <p>User settings not found.</p>
+      <% } %>
     </div>
-    <h1>User Settings</h1>
-    <% if (userSettings) { %>
-    <h2>Welcome, <%= userSettings.username %>!</h2>
 
-    <h3>Change Username:</h3>
-    <form id="usernameForm" action="/user/<%= userSettings.id %>/settings/username" method="POST">
-      <div>
-        <label for="newUsername">New Username:</label>
-        <input type="text" id="newUsername" name="newUsername" required />
-      </div>
-      <div>
-        <button type="submit">Change Username</button>
-      </div>
-    </form>
+    <%- include('partials/footer.ejs') %>
 
-    <h3>Change Password:</h3>
-    <form id="passwordForm" action="/user/<%= userSettings.id %>/settings/password" method="POST">
-      <div>
-        <label for="currentPassword">Current Password:</label>
-        <input type="password" id="currentPassword" name="currentPassword" required />
-        <label for="newPassword">New Password:</label>
-        <input type="password" id="newPassword" name="newPassword" required />
-      </div>
-      <div>
-        <button type="submit">Change Password</button>
-      </div>
-    </form>
-    <% } else { %>
-    <p>User settings not found.</p>
-    <% } %>
-
-    <script src="/updateUsername.js"></script>
+    <script src="/js/updateUsername.js"></script>
+    <script src="/js/dropdownuser.js"></script>
   </body>
 </html>

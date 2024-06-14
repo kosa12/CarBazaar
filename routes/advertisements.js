@@ -28,10 +28,22 @@ router.get('/new', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { brand, city, price, date } = req.body;
+  const { brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers } = req.body;
   const { userId } = req;
 
-  if (!brand || !city || !price || !date || !userId) {
+  if (
+    !brand ||
+    !city ||
+    !price ||
+    !date ||
+    !userId ||
+    !fuel_type ||
+    !transmission ||
+    !car_condition ||
+    !body_type ||
+    !color ||
+    !kilometers
+  ) {
     return res.status(400).send('Missing required fields.');
   }
 
@@ -39,16 +51,16 @@ router.post('/', async (req, res) => {
     return res.status(400).send('Invalid data format for price.');
   }
 
+  if (Number.isNaN(Number(kilometers))) {
+    return res.status(400).send('Invalid data format for kilometers.');
+  }
+
   try {
     const id = uuidv4();
-    await pool.execute('INSERT INTO hirdetes (id, brand, city, price, date, user_id) VALUES (?, ?, ?, ?, ?, ?)', [
-      id,
-      brand,
-      city,
-      price,
-      date,
-      userId,
-    ]);
+    await pool.execute(
+      'INSERT INTO hirdetes (id, brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [id, brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers, userId],
+    );
     res.redirect('/');
     return null;
   } catch (error) {
@@ -62,6 +74,7 @@ router.get('/:id', async (req, res) => {
 
   try {
     const advertisement = await getAdvertisementDetails(advertisementId);
+    advertisement.date = new Date(advertisement.date).toLocaleDateString();
     const partialPath = path.join('partials', 'image_upload_form.ejs');
     res.render('advertisement_details', { advertisement, partialPath, user: req.user });
   } catch (error) {

@@ -2,29 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>CarBazaar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/output.css" />
+    <title>Search Results</title>
   </head>
   <body class="bg-background font-Courier">
-    <%- include('partials/header.ejs', {user: user}) %>
+    <%- include('partials/headerForOtherPages.ejs') %>
 
     <div class="container mx-auto px-4">
-      <div class="welcome-text mt-16 pt-12 text-3xl">
-        <h1>Welcome to <span class="name-h text-navbarborder font-extrabold">CarBazaar</span>...</h1>
-        <p>Find the best deals on cars in your city!</p>
+      <div class="title mt-24 mb-4 text-2xl font-semibold text-center">
+        Search result for you, <%= user.username %>:
       </div>
 
-      <a name="search"></a>
-      <br />
-
-      <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Search Advertisements:</div>
-      <%- include('partials/homesearch.ejs', {user: user}) %>
-
-      <a name="advertisementsListO"></a>
-      <br />
-
-      <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Advertisement List:</div>
-
+      <% if (advertisements.length === 0) { %>
+      <p>No advertisements found matching the search criteria.</p>
+      <% } else { %>
       <div id="advertisementsList" class="flex flex-wrap justify-center gap-10 p-4 bg-transparent">
         <% advertisements.forEach(ad => { %>
         <div
@@ -49,15 +41,7 @@
             <h3 class="text-2xl font-extrabold text-background"><%= ad.brand %></h3>
             <p class="text-xl font-bold text-navbarhoverborder">Price: $<%= ad.price %></p>
             <p class="text-xl font-bold text-background">City: <%= ad.city %></p>
-            <div class="mt-4">
-              <button
-                data-id="<%= ad.id %>"
-                class="w-full view-details mt-2 block border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
-              >
-                View Extra Info
-              </button>
-              <div class="extra-details mt-3 text-background" id="details-<%=ad.id%>"></div>
-            </div>
+
             <a
               href="/advertisement/<%= ad.id %>"
               class="w-full mt-2 block border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
@@ -68,9 +52,7 @@
             <div
               class="flex flex-col items-center hover:scale-125 hover: transform transition-transform mr-8 duration-300"
             >
-              <a class="heart-icon" data-advertisement-id="<%= ad.id %>" data-user-id="<%= user.id %>">
-                <img src="/icons/heart.png" alt="Heart Icon" class="h-8 w-8" />
-              </a>
+              <img src="/icons/heart.png" alt="Heart Icon" class="h-8 w-8" />
             </div>
             <div class="flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
               <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
@@ -79,17 +61,10 @@
         </div>
         <% }); %>
       </div>
-      <br />
-      <br class="mt-20" />
-      <a name="add"></a>
-      <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Create NEW Advertisement for your car!</div>
-      <% if (user) { %> <%- include('partials/add_ads.ejs',) %> <% } %>
     </div>
 
-    <%- include('partials/footer.ejs') %>
+    <% } %> <%- include('partials/footer.ejs') %>
 
-    <script src="/js/ajax_details.js"></script>
-    <script src="/js/dropdownuser.js"></script>
-    <script src="/js/like.js"></script>
+    <script src="/js/dropdownuser.js" async></script>
   </body>
 </html>

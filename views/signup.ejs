@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Sign Up</title>
-    <link rel="stylesheet" href="/login_style.css" />
+    <link href="/output.css" rel="stylesheet" />
     <style>
       .error {
         color: red;
@@ -12,58 +12,75 @@
       }
     </style>
   </head>
-  <body>
-    <div class="topNav">
-      <a href="/" class="navbar-A">Home</a>
-      <div class="topNav-right"><a href="/login" class="navbar-A">Login</a></div>
-    </div>
+  <body class="bg-background font-Courier">
+    <%- include('partials/headerForSignedOut.ejs') %>
 
-    <div class="container">
-      <div class="form_area">
-        <p class="title">SIGN UP</p>
-        <form id="signupForm">
-          <div class="form_group">
-            <label class="sub_title" for="username">Username</label>
-            <input
-              placeholder="Enter your full name"
-              class="form_style"
-              type="text"
-              id="username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="form_group">
-            <label class="sub_title" for="password">Password</label>
-            <input
-              placeholder="Enter your password"
-              class="form_style"
-              type="password"
-              id="password"
-              name="password"
-              required
-            />
-          </div>
-          <div class="form_group">
-            <label class="sub_title" for="confirmPassword">Confirm Password</label>
-            <input
-              placeholder="Enter your password again"
-              class="form_style"
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              required
-            />
-          </div>
-          <div>
-            <button class="btn" type="submit">SIGN UP</button>
-            <p>Have an Account? <a class="link" href="/login">Login Here!</a></p>
-          </div>
-        </form>
-        <p id="errorMessage" class="error">Error message</p>
+    <div class="container mx-auto px-4 mt-24 flex justify-center">
+      <div class="bg-navbarborder border-4 border-navbarhoverborder rounded-lg overflow-hidden mt-20 mb-20 sm:max-w-md">
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-center text-background">SIGN UP</h2>
+
+          <form id="signupForm" class="mt-6">
+            <div class="mb-4">
+              <label for="username" class="block text-lg font-medium text-background">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your full name"
+                required
+                class="mt-1 block w-full px-3 py-2 border bg-background border-gray-300 shadow-sm sm:text-sm rounded-md"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="block text-lg font-medium text-background">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+                class="mt-1 block w-full px-3 py-2 border bg-background border-gray-300 shadow-sm sm:text-sm rounded-md"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="confirmPassword" class="block text-lg font-medium text-background">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Enter your password again"
+                required
+                class="mt-1 block w-full px-3 py-2 border bg-background border-gray-300 shadow-sm sm:text-sm rounded-md"
+              />
+            </div>
+
+            <div class="flex items-center justify-center">
+              <button
+                type="submit"
+                class="btn scale-110 duration-300 mt-3 border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+              >
+                SIGN UP
+              </button>
+            </div>
+
+            <p class="text-center mt-4 text-sm text-background">
+              Have an Account?
+              <a href="/login" class="hover:underline hover:text-navbarhoverborder hover:underline-offset-8"
+                >Login Here!</a
+              >
+            </p>
+          </form>
+        </div>
+        <p id="errorMessage" class="error mt-4 mb-4 text-red-600 text-center">Error message</p>
       </div>
     </div>
+
     <%- include('partials/footer.ejs') %>
+
     <script src="/js/signup.js"></script>
+    <script src="/js/dropdownuser.js"></script>
   </body>
 </html>

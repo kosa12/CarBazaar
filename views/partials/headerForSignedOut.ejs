@@ -1,0 +1,44 @@
+<div class="bg-navbarbackground fixed w-full top-0 left-0 border-4 border-navbarborder rounded-xl z-50">
+  <div class="flex items-center justify-between p-4">
+    <!-- Logo and title -->
+    <a href="/" class="flex items-center space-x-2">
+      <img src="/icons/car-services.png" class="h-12" alt="CarBazaar Logo" />
+      <span
+        class="self-center text-3xl font-semibold text-background hover:text-navbarhoverborder duration-300 transition-colors"
+        >CarBazaar</span
+      >
+    </a>
+
+    <div class="relative ml-auto md:ml-0 md:order-3">
+      <button
+        id="dropdownUserAvatarButton"
+        data-dropdown-toggle="dropdownAvatar"
+        class="flex text-sm bg-white rounded-full focus:ring-4 focus:ring-navbarhoverborder"
+        type="button"
+      >
+        <span class="sr-only">Open user menu</span>
+        <img class="w-8 h-8 rounded-full" src="/icons/user.png" alt="user photo" />
+      </button>
+      <div
+        id="dropdownAvatar"
+        class="z-10 hidden bg-navbarhover divide-y divide-navbarhoverborder rounded-lg shadow w-44 absolute right-0 mt-2"
+      >
+        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+          <div><%= "You are not logged in..." %></div>
+        </div>
+        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+          <li>
+            <a href="/login" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Log In</a
+            >
+          </li>
+          <li>
+            <a href="/signup" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >Sign Up</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

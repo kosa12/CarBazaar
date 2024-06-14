@@ -16,6 +16,12 @@ router.get('/', authMiddleware, async (req, res) => {
           city: ad.city,
           price: ad.price,
           date: ad.date,
+          fuel_type: ad.fuel_type,
+          transmission: ad.transmission,
+          car_condition: ad.car_condition,
+          body_type: ad.body_type,
+          color: ad.color,
+          kilometers: ad.kilometers,
           imageUrl,
         };
       }),

@@ -16,6 +16,8 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
   const { username, password } = req.body;
 
+  console.log('Login request:', username, password);
+
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required.' });
   }

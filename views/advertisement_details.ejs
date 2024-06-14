@@ -28,8 +28,28 @@
               <td class="text-xl px-4 py-2">$<%= advertisement.price %></td>
             </tr>
             <tr>
-              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Date:</td>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Manufacturing date:</td>
               <td class="text-xl px-4 py-2"><%= advertisement.date %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Fuel type:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.fuel_type %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Car condition:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.car_condition %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Kilometers used:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.kilometers %>km</td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Transmission type:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.transmission %></td>
+            </tr>
+            <tr>
+              <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Body color:</td>
+              <td class="text-xl px-4 py-2"><%= advertisement.color %></td>
             </tr>
             <tr>
               <td class="text-xl font-semibold px-4 py-2 text-navbarbackground">Owner:</td>
@@ -42,7 +62,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <% advertisement.images.forEach(image => { %>
         <div
-          class="relative mb-20 image image-details border-4 border-navbarbackground rounded-lg overflow-hidden max-w-80 max-h-80"
+          class="relative mb-20 image mr-5 image-details border-4 border-navbarbackground rounded-lg overflow-hidden max-w-96 max-h-96"
           data-id="<%= image.url %>"
         >
           <img
