@@ -96,12 +96,44 @@ router.post('/:id/settings/username', verifyToken, async (req, res) => {
   }
 });
 
+function validatePassword(password) {
+  const errors = [];
+
+  if (password.length < 8) {
+    errors.push('Password must be at least 8 characters long.');
+    return errors;
+  }
+  if (!/[a-z]/.test(password)) {
+    errors.push('Password must contain at least one lowercase letter.');
+    return errors;
+  }
+  if (!/[A-Z]/.test(password)) {
+    errors.push('Password must contain at least one uppercase letter.');
+    return errors;
+  }
+  if (!/\d/.test(password)) {
+    errors.push('Password must contain at least one number.');
+    return errors;
+  }
+  if (!/[@$!%*?&]/.test(password)) {
+    errors.push('Password must contain at least one special character (e.g., @, $, !, %, *, ?, &).');
+    return errors;
+  }
+
+  return errors;
+}
+
 router.post('/:id/settings/password', verifyToken, async (req, res) => {
   const userId = parseInt(req.params.id, 10);
   const { currentPassword, newPassword } = req.body;
 
   if (req.userId !== userId) {
     return res.status(403).json({ message: 'Unauthorized access' });
+  }
+
+  const passwordErrors = validatePassword(newPassword);
+  if (passwordErrors.length > 0) {
+    return res.status(400).json({ error: passwordErrors });
   }
 
   try {
