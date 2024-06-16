@@ -154,9 +154,9 @@ router.post('/:id/settings/password', verifyToken, async (req, res) => {
     const newPasswordHash = await bcrypt.hash(newPassword, 10);
 
     const updateQuery = 'UPDATE felhasznalo SET user_password = ? WHERE id = ?';
-    await pool.query(updateQuery, [newPasswordHash, userId]);
+    const respone = await pool.query(updateQuery, [newPasswordHash, userId]);
 
-    return res.status(200).redirect(`/user/${userId}/settings`);
+    return res.status(200).json({ message: 'Password updated successfully' });
   } catch (err) {
     return res.status(500).json({ error: 'Database query error!' });
   }
