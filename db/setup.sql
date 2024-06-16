@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS hirdetes (
     kilometers INT NOT NULL,
     date DATE NOT NULL,
     user_id INT,
+    likes INT DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES felhasznalo(id)
 );
 

@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import pool from '../db/connection.js';
+import authMiddleware from '../middlewares/auth.js';
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   const { userId, advertisementId } = req.body;
 
   try {
@@ -15,6 +16,8 @@ router.post('/', async (req, res) => {
       userId,
       advertisementId,
     ]);
+
+    await pool.query('UPDATE hirdetes SET likes = likes + 1 WHERE id = ?', [advertisementId]);
 
     return res.status(200).json({ message: 'Liked advertisement updated successfully', advertisementId });
   } catch (error) {

@@ -11,7 +11,9 @@ dotenv.config({ path: './config/secret.env' });
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 router.get('/', async (req, res) => {
-  const { brand, city, minPrice, maxPrice } = req.query;
+  const { brand, city, minPrice, maxPrice, year, kilometers, fuelType, transmission, condition, bodyType, color } =
+    req.query;
+  console.log('req.query:', req.query);
   const token = req.cookies.token;
   const decoded = jwt.verify(token, jwtSecretKey);
   const { userId } = decoded;
@@ -21,6 +23,8 @@ router.get('/', async (req, res) => {
 
   const parsedMinPrice = parseFloat(minPrice);
   const parsedMaxPrice = parseFloat(maxPrice);
+  const parsedYear = parseInt(year, 10);
+  const parsedKilometers = parseInt(kilometers, 10);
 
   if ((minPrice && Number.isNaN(parsedMinPrice)) || parsedMinPrice < 0) {
     return res.status(400).send('Invalid minPrice');
@@ -49,6 +53,34 @@ router.get('/', async (req, res) => {
     if (maxPrice) {
       query += ' AND price <= ?';
       params.push(maxPrice);
+    }
+    if (year) {
+      query += ' AND YEAR(date) >= ?';
+      params.push(parsedYear);
+    }
+    if (kilometers) {
+      query += ' AND kilometers <= ?';
+      params.push(parsedKilometers);
+    }
+    if (fuelType) {
+      query += ' AND fuel_type = ?';
+      params.push(fuelType);
+    }
+    if (transmission) {
+      query += ' AND transmission = ?';
+      params.push(transmission);
+    }
+    if (condition) {
+      query += ' AND car_condition = ?';
+      params.push(condition);
+    }
+    if (bodyType) {
+      query += ' AND body_type = ?';
+      params.push(bodyType);
+    }
+    if (color) {
+      query += ' AND color = ?';
+      params.push(color);
     }
 
     const [rows] = await pool.execute(query, params);

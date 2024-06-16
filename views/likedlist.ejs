@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/output.css" />
+    <title>Liked Advertisements</title>
+  </head>
+  <body class="bg-background font-Courier">
+    <%- include('partials/headerForOtherPages.ejs', { user: user }) %>
+
+    <div class="container mx-auto px-4">
+      <div class="title mt-24 mb-4 text-2xl font-semibold text-center">Liked Advertisements:</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% if (likedAdvertisements.length === 0) { %>
+        <p class="text-center text-lg text-navbarbackground">You haven't liked any advertisements yet.</p>
+        <% } else { %> <% likedAdvertisements.forEach(ad => { %>
+        <div
+          class="advertisement bg-navbarborder border-4 border-navbarhoverborder rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300"
+        >
+          <div class="relative overflow-hidden h-48">
+            <img
+              class="object-cover w-full h-full border-2 border-background rounded-t-lg"
+              src="<%= ad.imageUrl ? '/uploadDir/' + ad.imageUrl : '/icons/car.png' %>"
+              alt="<%= ad.brand %>"
+            />
+          </div>
+          <div class="p-4">
+            <p class="text-xl font-semibold text-background">Brand: <%= ad.brand %></p>
+            <p class="text-lg font-semibold text-navbarhoverborder">Price: $<%= ad.price %></p>
+            <p class="text-lg font-semibold text-background">City: <%= ad.city %></p>
+            <a
+              href="/advertisement/<%= ad.id %>"
+              class="block mt-4 text-center border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+              >View Advertisement</a
+            >
+          </div>
+        </div>
+        <% }); %> <% } %>
+      </div>
+    </div>
+
+    <script src="/js/dropdownuser.js"></script>
+  </body>
+</html>

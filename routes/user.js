@@ -130,4 +130,43 @@ router.post('/:id/settings/password', verifyToken, async (req, res) => {
   }
 });
 
+router.get('/:id/likedlist', verifyToken, async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+
+  if (req.userId !== userId) {
+    return res.status(403).json({ message: 'Unauthorized access' });
+  }
+
+  try {
+    const likedAdsQuery = 'SELECT DISTINCT advertisement_id FROM liked_ads WHERE user_id = ?';
+    const [likedRows] = await pool.query(likedAdsQuery, [userId]);
+    const likedAdvertisements = likedRows.map((row) => row.advertisement_id);
+
+    const adsQuery = `
+      SELECT h.*, f.filename AS imageUrl
+      FROM hirdetes h
+      LEFT JOIN (
+        SELECT advertisement_id, MIN(filename) AS filename
+        FROM fenykep
+        GROUP BY advertisement_id
+      ) f ON h.id = f.advertisement_id
+      WHERE h.id IN (?)
+    `;
+
+    if (likedAdvertisements.length === 0) {
+      return res.render('likedlist', { user: {}, likedAdvertisements: [] });
+    }
+    const [adsResults] = await pool.query(adsQuery, [likedAdvertisements]);
+
+    const userQuery = 'SELECT * FROM felhasznalo WHERE id = ?';
+    const [userResults] = await pool.query(userQuery, [userId]);
+    const user = userResults[0];
+
+    res.render('likedlist', { user, likedAdvertisements: adsResults });
+  } catch (error) {
+    console.error('Error fetching liked advertisements:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;

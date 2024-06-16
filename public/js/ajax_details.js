@@ -16,6 +16,7 @@ function updateDetailsDiv(detailsDiv, data) {
   const fuel_type = parsedData.fuel_type;
   const transmission = parsedData.transmission;
   const kilometers = parsedData.kilometers;
+  const likeCount = parsedData.likes;
 
   detailsDiv.textContent = '';
 
@@ -27,6 +28,9 @@ function updateDetailsDiv(detailsDiv, data) {
 
   const kilometersParagraph = document.createElement('p');
   kilometersParagraph.textContent = `Kilometers used: ${kilometers} km`;
+
+  const likeCountParagraph = document.createElement('p');
+  likeCountParagraph.textContent = `Liked by: ${likeCount} users`;
 
   const createDelimiter = () => {
     const delimiter = document.createElement('div');
@@ -40,6 +44,8 @@ function updateDetailsDiv(detailsDiv, data) {
   detailsDiv.appendChild(transmissionParagraph);
   detailsDiv.appendChild(createDelimiter());
   detailsDiv.appendChild(kilometersParagraph);
+  detailsDiv.appendChild(createDelimiter());
+  detailsDiv.appendChild(likeCountParagraph);
 }
 
 function handleViewDetailsClick(event) {
