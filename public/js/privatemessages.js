@@ -5,24 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const sendMessageButton = document.getElementById('sendMessageButton');
   let currentUserId = null;
 
-  userList.addEventListener('click', async (event) => {
-    if (event.target.classList.contains('user-button')) {
-      currentUserId = event.target.getAttribute('data-user-id');
-      await loadConversation(currentUserId);
-    }
-  });
-
-  async function loadConversation(userId) {
-    try {
-      const response = await fetch(`/privatemessages/conversation/${userId}`);
-      const data = await response.json();
-      renderConversation(data.messages);
-    } catch (error) {
-      console.error('Error loading conversation:', error);
-      renderError('Error loading conversation.');
-    }
+  function formatTimestamp(timestamp) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Intl.DateTimeFormat('en-US', options).format(timestamp);
   }
 
+  // Function to render conversation
   function renderConversation(messages) {
     conversationDiv.innerHTML = '';
     messages.forEach((message) => {
@@ -45,21 +33,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
       conversationDiv.appendChild(messageDiv);
     });
+    conversationDiv.scrollTo(0, conversationDiv.scrollHeight);
   }
 
-  function formatTimestamp(timestamp) {
-    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    return new Intl.DateTimeFormat('en-US', options).format(timestamp);
+  async function loadConversation(userId) {
+    try {
+      const response = await fetch(`/privatemessages/conversation/${userId}`);
+      const data = await response.json();
+      renderConversation(data.messages);
+    } catch (error) {
+      console.error('Error loading conversation:', error);
+      conversationDiv.innerHTML = '<p>Error loading conversation.</p>';
+    }
   }
 
-  function renderError(message) {
-    conversationDiv.innerHTML = `<p>${message}</p>`;
-  }
+  userList.addEventListener('click', (event) => {
+    if (event.target.classList.contains('user-button')) {
+      currentUserId = event.target.getAttribute('data-user-id');
+      loadConversation(currentUserId);
+    }
+  });
 
-  sendMessageButton.addEventListener('click', async () => {
-    const messageContent = messageInput.value.trim();
-    if (currentUserId && messageContent) {
-      await sendMessage(currentUserId, messageContent);
+  sendMessageButton.addEventListener('click', () => {
+    if (currentUserId && messageInput.value.trim()) {
+      sendMessage(currentUserId, messageInput.value.trim());
       messageInput.value = '';
     }
   });
@@ -73,17 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         body: JSON.stringify({ messageContent }),
       });
-
       const data = await response.json();
       if (data.message) {
-        await loadConversation(receiverId);
-      } else {
-        console.error('Error sending message:', data.error || 'Unknown error');
-        renderError('Failed to send message.');
+        loadConversation(receiverId);
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      renderError('An error occurred while sending the message.');
     }
+  }
+
+  const firstUserButton = userList.querySelector('.user-button');
+  if (firstUserButton) {
+    firstUserButton.click();
   }
 });
