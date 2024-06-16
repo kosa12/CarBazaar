@@ -45,3 +45,13 @@ CREATE TABLE IF NOT EXISTS liked_ads (
     FOREIGN KEY (user_id) REFERENCES felhasznalo(id),
     FOREIGN KEY (advertisement_id) REFERENCES hirdetes(id)
 );
+
+CREATE TABLE messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    message_content TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES felhasznalo(id),
+    FOREIGN KEY (receiver_id) REFERENCES felhasznalo(id)
+);

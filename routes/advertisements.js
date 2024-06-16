@@ -121,4 +121,20 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.post('/addmessage', authMiddleware, async (req, res) => {
+  const { messageContent, senderID, receiverUsername } = req.body;
+
+  const [[receiver]] = await pool.query('SELECT id FROM felhasznalo WHERE username = ?', [receiverUsername]);
+  const receiverId = receiver.id;
+  try {
+    const query = 'INSERT INTO messages (sender_id, receiver_id, message_content) VALUES (?, ?, ?)';
+    await pool.query(query, [senderID, receiverId, messageContent]);
+
+    return res.status(200).json({ message: 'Message sent successfully' });
+  } catch (error) {
+    console.error('Error sending message:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;

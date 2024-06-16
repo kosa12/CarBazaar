@@ -90,9 +90,15 @@
       <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %>
     </div>
 
+    <form id="messageForm" data-sender-id="<%= user.id %>" data-receiver-username="<%= advertisement.username %>">
+      <textarea id="messageContent" rows="4" placeholder="Type your message here..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
     <%- include('partials/footer.ejs') %>
 
     <script src="/js/ajax_delete.js"></script>
     <script src="/js/dropdownuser.js"></script>
+    <script src="/js/message.js"></script>
   </body>
 </html>
