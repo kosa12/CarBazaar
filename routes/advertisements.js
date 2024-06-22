@@ -121,6 +121,24 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.get('/:id/offers', authMiddleware, async (req, res) => {
+  const advertisementId = req.params.id;
+  try {
+    const sql = `
+      SELECT o.*, u.username
+      FROM offers o
+      INNER JOIN felhasznalo u ON o.user_id = u.id
+      WHERE o.advertisement_id = ?
+    `;
+    const [offers] = await pool.query(sql, [advertisementId]);
+
+    res.json({ success: true, offers });
+  } catch (error) {
+    console.error('Error fetching offers:', error);
+    res.status(500).json({ success: false, message: 'An error occurred while fetching offers' });
+  }
+});
+
 router.post('/addmessage', authMiddleware, async (req, res) => {
   const { messageContent, senderID, receiverUsername } = req.body;
 

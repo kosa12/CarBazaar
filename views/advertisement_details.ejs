@@ -90,6 +90,8 @@
       <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %>
     </div>
 
+    <div id="offerList"></div>
+
     <% if (user && user.username !== advertisement.username) { %>
     <div class="flex items-center justify-center">
       <form
@@ -113,10 +115,13 @@
         </button>
       </form>
     </div>
+
+    <input type="hidden" id="advertisementId" data-advertisement-id="<%= advertisement.id %>" />
     <% } %> <%- include('partials/footer.ejs') %>
 
     <script src="/js/ajax_delete.js"></script>
     <script src="/js/dropdownuser.js"></script>
     <script src="/js/message.js"></script>
+    <script src="/js/offers.js"></script>
   </body>
 </html>

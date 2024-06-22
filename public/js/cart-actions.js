@@ -38,12 +38,27 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', function (event) {
       event.preventDefault();
       const advertisementId = this.getAttribute('data-advertisement-id');
+      showOfferModal(advertisementId);
+    });
+  });
+
+  function showOfferModal(advertisementId) {
+    const modal = document.getElementById('offerModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    const offerForm = document.getElementById('offerForm');
+    offerForm.addEventListener('submit', handleOfferSubmission);
+
+    function handleOfferSubmission(event) {
+      event.preventDefault();
+      const offerAmount = document.getElementById('offerAmount').value;
       fetch(`/cart/offer/${advertisementId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ advertisementId }),
+        body: JSON.stringify({ advertisementId, offerAmount }),
       })
         .then((response) => {
           if (!response.ok) {
@@ -53,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then((data) => {
           if (data.success) {
-            alert('Offer placed successfully!');
+            alert(data.message);
+            hideOfferModal();
           } else {
             alert('Failed to place offer.');
           }
@@ -62,8 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
           console.error('Error:', error);
           alert('An error occurred. Please try again.');
         });
-    });
-  });
+    }
+  }
+
+  function hideOfferModal() {
+    const modal = document.getElementById('offerModal');
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+  }
 
   removeButtons.forEach((button) => {
     button.addEventListener('click', function (event) {

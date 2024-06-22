@@ -64,3 +64,13 @@ CREATE TABLE IF NOT EXISTS cart (
     FOREIGN KEY (user_id) REFERENCES felhasznalo(id),
     FOREIGN KEY (advertisement_id) REFERENCES hirdetes(id)
 );
+
+CREATE TABLE IF NOT EXISTS offers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    advertisement_id VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    price INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES felhasznalo(id),
+    FOREIGN KEY (advertisement_id) REFERENCES hirdetes(id)
+);
