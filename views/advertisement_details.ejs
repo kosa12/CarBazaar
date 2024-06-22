@@ -90,12 +90,30 @@
       <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %>
     </div>
 
-    <form id="messageForm" data-sender-id="<%= user.id %>" data-receiver-username="<%= advertisement.username %>">
-      <textarea id="messageContent" rows="4" placeholder="Type your message here..." required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-
-    <%- include('partials/footer.ejs') %>
+    <% if (user && user.username !== advertisement.username) { %>
+    <div class="flex items-center justify-center">
+      <form
+        class="p-3 bg-navbarbackground bg-opacity-50 rounded-lg"
+        id="messageForm"
+        data-sender-id="<%= user.id %>"
+        data-receiver-username="<%= advertisement.username %>"
+      >
+        <textarea
+          id="messageContent"
+          rows="4"
+          placeholder="Type your message here..."
+          required
+          class="w-full p-2 border-2 border-navbarbackground rounded-md"
+        ></textarea>
+        <button
+          type="submit"
+          class="mt-2 border-2 border-transparent bg-navbarbackground hover:bg-navbarborder text-white px-4 py-2 rounded-md"
+        >
+          Send Message
+        </button>
+      </form>
+    </div>
+    <% } %> <%- include('partials/footer.ejs') %>
 
     <script src="/js/ajax_delete.js"></script>
     <script src="/js/dropdownuser.js"></script>

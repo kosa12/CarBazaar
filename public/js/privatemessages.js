@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return new Intl.DateTimeFormat('en-US', options).format(timestamp);
   }
 
-  // Function to render conversation
   function renderConversation(messages) {
     conversationDiv.innerHTML = '';
     messages.forEach((message) => {

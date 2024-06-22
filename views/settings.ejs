@@ -17,18 +17,20 @@
         <div class="title mt-5 mb-4 text-xl font-semibold">Change Username:</div>
 
         <form id="usernameForm" action="/user/<%= userSettings.id %>/settings/username" method="POST">
-          <div class="mb-4 flex items-center">
-            <label for="newUsername" class="block text-lg font-medium text-navbarborder mr-5">New Username:</label>
+          <div class="mb-4">
+            <label for="newUsername" class="block text-lg font-medium text-navbarborder mb-2">New Username:</label>
             <input
               type="text"
               id="newUsername"
               name="newUsername"
               required
-              class="block px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background flex-grow"
+              class="block w-full px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background"
             />
+          </div>
+          <div class="flex justify-end">
             <button
               type="submit"
-              class="ml-2 border-2 border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
+              class="border-2 mb- border-transparent bg-navbarbackground hover:bg-navbarborder hover:border-2 hover:border-background hover:rounded-lg text-white px-4 py-2 rounded-md"
             >
               Change Username
             </button>
@@ -50,7 +52,7 @@
                 id="currentPassword"
                 name="currentPassword"
                 required
-                class="block px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background w-full"
+                class="block w-full px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background"
               />
             </div>
             <div class="w-1/2">
@@ -60,7 +62,7 @@
                 id="newPassword"
                 name="newPassword"
                 required
-                class="block px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background w-full"
+                class="block w-full px-3 py-2 border-2 border-navbarborder shadow-sm sm:text-sm rounded-md bg-navbarbackground text-background"
               />
             </div>
           </div>
