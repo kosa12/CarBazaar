@@ -14,6 +14,7 @@ import userRoutes from './routes/user.js';
 import likedAdvertisementsRouter from './routes/likedAdvertisements.js';
 import unlikedAdvertisementsRouter from './routes/unlikedAdvertisements.js';
 import privateMessagesRouter from './routes/privatemessages.js';
+import addToCartRouter from './routes/cart.js';
 
 const app = express();
 const PORT = 5000;
@@ -45,6 +46,7 @@ app.use('/user', userRoutes);
 app.use('/liked', likedAdvertisementsRouter);
 app.use('/unliked', unlikedAdvertisementsRouter);
 app.use('/privatemessages', privateMessagesRouter);
+app.use('/cart', addToCartRouter);
 
 app.use(express.static(path.join(dirname, '/public')));
 app.use('/uploadDir', express.static(uploadDir));

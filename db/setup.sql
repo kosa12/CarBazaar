@@ -55,3 +55,12 @@ CREATE TABLE messages (
     FOREIGN KEY (sender_id) REFERENCES felhasznalo(id),
     FOREIGN KEY (receiver_id) REFERENCES felhasznalo(id)
 );
+
+CREATE TABLE IF NOT EXISTS cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    advertisement_id VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES felhasznalo(id),
+    FOREIGN KEY (advertisement_id) REFERENCES hirdetes(id)
+);

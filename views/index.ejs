@@ -84,7 +84,9 @@
               <img src="/icons/offer.png" alt="Offer Icon" class="h-8 w-8" />
             </div>
             <div class="flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
-              <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
+              <a href="#" class="cart-icon" data-advertisement-id="<%= ad.id %>" data-user-id="<%= user.id %>">
+                <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
+              </a>
             </div>
           </div>
         </div>
@@ -103,5 +105,6 @@
     <script src="/js/ajax_details.js"></script>
     <script src="/js/dropdownuser.js"></script>
     <script src="/js/like.js"></script>
+    <script src="/js/cart.js"></script>
   </body>
 </html>

@@ -201,4 +201,46 @@ router.get('/:id/likedlist', verifyToken, async (req, res) => {
   }
 });
 
+router.get('/:id/cart', verifyToken, async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+
+  if (req.userId !== userId) {
+    return res.status(403).json({ message: 'Unauthorized access' });
+  }
+
+  try {
+    const distinctAdsForUser = 'SELECT DISTINCT advertisement_id FROM cart WHERE user_id = ?';
+    const [carRows] = await pool.query(distinctAdsForUser, [userId]);
+    const cartAds = carRows.map((row) => row.advertisement_id);
+
+    console.log(cartAds);
+
+    if (cartAds.length === 0) {
+      return res.render('cart', { user: {}, cartAds: [] });
+    }
+
+    const adsQuery = `
+      SELECT h.*, f.filename AS imageUrl
+      FROM hirdetes h
+      LEFT JOIN (
+        SELECT advertisement_id, MIN(filename) AS filename
+        FROM fenykep
+        GROUP BY advertisement_id
+      ) f ON h.id = f.advertisement_id
+      WHERE h.id IN (?)
+    `;
+
+    const [adsResults] = await pool.query(adsQuery, [cartAds]);
+
+    const userQuery = 'SELECT * FROM felhasznalo WHERE id = ?';
+    const [userResults] = await pool.query(userQuery, [userId]);
+    const user = userResults[0];
+
+    res.render('cart', { user, cartAds: adsResults });
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
