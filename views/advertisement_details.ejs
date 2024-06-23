@@ -90,9 +90,10 @@
       <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %>
     </div>
 
+    <% if (user && user.username === advertisement.username) { %>
     <div id="offerList"></div>
-
-    <% if (user && user.username !== advertisement.username) { %>
+    <input type="hidden" id="advertisementId" data-advertisement-id="<%= advertisement.id %>" />
+    <% } %> <% if (user && user.username !== advertisement.username) { %>
     <div class="flex items-center justify-center">
       <form
         class="p-3 bg-navbarbackground bg-opacity-50 rounded-lg"
@@ -116,7 +117,6 @@
       </form>
     </div>
 
-    <input type="hidden" id="advertisementId" data-advertisement-id="<%= advertisement.id %>" />
     <% } %> <%- include('partials/footer.ejs') %>
 
     <script src="/js/ajax_delete.js"></script>

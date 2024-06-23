@@ -1,24 +1,33 @@
-// offers.js
-
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM fully loaded and parsed');
 
   const offerList = document.getElementById('offerList');
 
   if (offerList) {
-    const advertisementId = document.getElementById('advertisementId').dataset.advertisementId;
+    const advertisementIdElement = document.getElementById('advertisementId');
+    const advertisementId = advertisementIdElement.getAttribute('data-advertisement-id');
     fetchOffers(advertisementId)
       .then((data) => {
         if (data && data.success && data.offers) {
           renderOffers(data);
         } else {
-          displayNoOffersMessage();
+          displayNoOffersMessage(offerList);
         }
       })
       .catch((error) => {
         console.error('Error fetching offers:', error);
-        displayErrorMessage();
+        displayErrorMessage(offerList);
       });
+
+    offerList.addEventListener('click', function (event) {
+      if (event.target.classList.contains('accept-offer-button')) {
+        const offerId = event.target.dataset.offerId;
+        handleOfferAction(offerId, 'accept');
+      } else if (event.target.classList.contains('decline-offer-button')) {
+        const offerId = event.target.dataset.offerId;
+        handleOfferAction(offerId, 'decline');
+      }
+    });
   } else {
     console.error('Element with ID offerList not found.');
   }
@@ -28,14 +37,52 @@ function fetchOffers(advertisementId) {
   return fetch(`/advertisement/${advertisementId}/offers`)
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        return response.json().then((errorData) => {
+          throw new Error(`${response.status} ${response.statusText}: ${JSON.stringify(errorData)}`);
+        });
       }
-
       return response.json();
     })
     .catch((error) => {
       console.error('Error fetching offers:', error);
       throw error;
+    });
+}
+
+function handleOfferAction(offerId, action) {
+  fetch(`/offers/${offerId}/${action}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((errorData) => {
+          throw new Error(`${response.status} ${response.statusText}: ${JSON.stringify(errorData)}`);
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success) {
+        if (data.success) {
+          const offerElement = document.getElementById(`offer-${offerId}`);
+          if (offerElement) {
+            offerElement.remove();
+          } else {
+            console.error('Offer element not found in DOM');
+          }
+          alert(data.message);
+        } else {
+          console.error('Error with offer action:', data.message);
+        }
+      } else {
+        console.error('Error with offer action:', data.message);
+      }
+    })
+    .catch((error) => {
+      console.error('Error with offer action:', error);
     });
 }
 
@@ -48,7 +95,7 @@ function renderOffers(responseData) {
     }
 
     const centerDiv = document.createElement('div');
-    centerDiv.className = 'flex items-center justify-center flex-col';
+    centerDiv.className = 'p-4 flex items-center justify-center flex-col';
     offerList.appendChild(centerDiv);
 
     const title = document.createElement('div');
@@ -69,6 +116,7 @@ function renderOffers(responseData) {
       if (offers.length > 0) {
         offers.forEach((offer) => {
           const row = document.createElement('tr');
+          row.id = `offer-${offer.id}`;
 
           const createdAt = new Date(offer.created_at);
           const formattedDate = `${createdAt.toLocaleDateString()} ${createdAt.toLocaleTimeString()}`;
@@ -131,40 +179,15 @@ function displayNoOffersMessage(container) {
   container.appendChild(message);
 }
 
-function displayNoOffersMessage() {
-  const offerList = document.getElementById('offerList');
-
-  if (offerList) {
-    while (offerList.firstChild) {
-      offerList.removeChild(offerList.firstChild);
-    }
-
-    const row = document.createElement('tr');
-    const cell = document.createElement('td');
-    cell.colSpan = 3;
-    cell.className = 'text-center py-4';
-    cell.textContent = 'No offers yet.';
-    row.appendChild(cell);
-
-    offerList.appendChild(row);
+function displayErrorMessage(container) {
+  // Clear previous content
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
-}
 
-function displayErrorMessage() {
-  const offerList = document.getElementById('offerList');
-
-  if (offerList) {
-    while (offerList.firstChild) {
-      offerList.removeChild(offerList.firstChild);
-    }
-
-    const row = document.createElement('tr');
-    const cell = document.createElement('td');
-    cell.colSpan = 3;
-    cell.className = 'text-center py-4';
-    cell.textContent = 'Error fetching offers. Please try again later.';
-    row.appendChild(cell);
-
-    offerList.appendChild(row);
-  }
+  // Add message in the center
+  const message = document.createElement('div');
+  message.className = 'text-center py-4';
+  message.textContent = 'Error fetching offers. Please try again later.';
+  container.appendChild(message);
 }
