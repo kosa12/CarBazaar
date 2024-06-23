@@ -1,13 +1,13 @@
 import express from 'express';
 import authMiddleware from '../middlewares/auth.js';
-import pool from '../db/connection.js';
 import { getAdvertisementImage } from '../utils/advertisementUtils.js';
+import { getHirdetesek, getLikedAds } from '../utils/indexUtils.js';
 
 const router = express.Router();
 
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const [adRows] = await pool.query('SELECT * FROM hirdetes');
+    const [adRows] = await getHirdetesek();
     const advertisements = await Promise.all(
       adRows.map(async (ad) => {
         const imageUrl = await getAdvertisementImage(ad.id);
@@ -29,7 +29,7 @@ router.get('/', authMiddleware, async (req, res) => {
     );
     try {
       const userId = req.user.id;
-      const [likedRows] = await pool.query('SELECT advertisement_id FROM liked_ads WHERE user_id = ?', [userId]);
+      const [likedRows] = await getLikedAds(userId);
       const likedAdvertisements = likedRows.map((row) => row.advertisement_id);
 
       const { user } = req;

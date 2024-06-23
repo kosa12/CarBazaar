@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import pool from '../db/connection.js';
 import authMiddleware from '../middlewares/auth.js';
+import { insertIntoLikedAds, updateLikeNumber } from '../utils/likedAdsUtils.js';
 
 const router = Router();
 
@@ -12,12 +12,9 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'advertisementId is required' });
     }
 
-    const result = await pool.query('INSERT INTO liked_ads (user_id, advertisement_id) VALUES (?, ?)', [
-      userId,
-      advertisementId,
-    ]);
+    insertIntoLikedAds(userId, advertisementId);
 
-    await pool.query('UPDATE hirdetes SET likes = likes + 1 WHERE id = ?', [advertisementId]);
+    await updateLikeNumber(advertisementId);
 
     return res.status(200).json({ message: 'Liked advertisement updated successfully', advertisementId });
   } catch (error) {

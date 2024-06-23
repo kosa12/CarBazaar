@@ -2,7 +2,7 @@ import { Router } from 'express';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import pool from '../db/connection.js';
+import { getUsers, insertUser } from '../utils/signupUtils.js';
 
 dotenv.config({ path: './config/secret.env' });
 
@@ -57,17 +57,14 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const [existingUser] = await pool.query('SELECT * FROM felhasznalo WHERE username = ?', [username]);
+    const [existingUser] = await getUsers(username);
     if (existingUser.length > 0) {
       return res.status(400).json({ error: 'Username already taken.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [result] = await pool.query('INSERT INTO felhasznalo (username, user_password) VALUES (?, ?)', [
-      username,
-      hashedPassword,
-    ]);
+    const [result] = await insertUser(username, hashedPassword);
 
     const userId = result.insertId;
 

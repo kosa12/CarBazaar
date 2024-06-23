@@ -7,14 +7,17 @@
     <title>Search Results</title>
   </head>
   <body class="bg-background font-Courier">
-    <%- include('partials/headerForOtherPages.ejs') %>
+    <% if (user) { %> <%- include('partials/headerForOtherPages.ejs') %> <% } else { %> <%-
+    include('partials/headerForSignedOut.ejs') %> <% } %>
 
     <div class="container mx-auto px-4">
+      <% if (user) { %>
       <div class="title mt-24 mb-4 text-2xl font-semibold text-center">
         Search result for you, <%= user.username %>:
       </div>
-
-      <% if (advertisements.length === 0) { %>
+      <% } else { %>
+      <div class="title mt-24 mb-4 text-2xl font-semibold text-center">Search result:</div>
+      <% } %> <% if (advertisements.length === 0) { %>
       <p>No advertisements found matching the search criteria.</p>
       <% } else { %>
       <div id="advertisementsList" class="flex flex-wrap justify-center gap-10 p-4 bg-transparent">
@@ -48,16 +51,26 @@
               >View Advertisement</a
             >
           </div>
-          <div class="flex justify-center mt-10 gap-6">
+          <% if (user) { %>
+          <div class="flex justify-center mt-10 gap-4">
             <div
               class="flex flex-col items-center hover:scale-125 hover: transform transition-transform mr-8 duration-300"
             >
-              <img src="/icons/heart.png" alt="Heart Icon" class="h-8 w-8" />
+              <a href="#" class="heart-icon" data-advertisement-id="<%= ad.id %>" data-user-id="<%= user.id %>">
+                <img
+                  src="<%= likedAdvertisements.includes(ad.id) ? '/icons/full-heart.png' : '/icons/heart.png' %>"
+                  alt="Heart Icon"
+                  class="h-8 w-8"
+                />
+              </a>
             </div>
             <div class="flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
-              <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
+              <a href="#" class="cart-icon" data-advertisement-id="<%= ad.id %>" data-user-id="<%= user.id %>">
+                <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
+              </a>
             </div>
           </div>
+          <% } %>
         </div>
         <% }); %>
       </div>
@@ -66,5 +79,7 @@
     <% } %> <%- include('partials/footer.ejs') %>
 
     <script src="/js/dropdownuser.js" async></script>
+    <script src="/js/like.js"></script>
+    <script src="/js/cart.js"></script>
   </body>
 </html>

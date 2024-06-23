@@ -9,7 +9,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'webprog'@'localhost' IDENTIFIED BY 'asd';
 CREATE TABLE IF NOT EXISTS felhasznalo (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
-    user_password VARCHAR(255) NOT NULL
+    user_password VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE IF NOT EXISTS hirdetes (
@@ -74,3 +75,7 @@ CREATE TABLE IF NOT EXISTS offers (
     FOREIGN KEY (user_id) REFERENCES felhasznalo(id),
     FOREIGN KEY (advertisement_id) REFERENCES hirdetes(id)
 );
+
+UPDATE felhasznalo SET role = 'admin' WHERE username = 'admin';
+
+-- adminadminA1!   admin jelszo

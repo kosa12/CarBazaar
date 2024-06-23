@@ -243,4 +243,56 @@ router.get('/:id/cart', verifyToken, async (req, res) => {
   }
 });
 
+router.get('/:id/admintable', verifyToken, async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+
+  if (req.userId !== userId) {
+    return res.status(403).json({ message: 'Unauthorized access' });
+  }
+
+  try {
+    const userQuery = 'SELECT * FROM felhasznalo WHERE id = ?';
+    const [userResults] = await pool.query(userQuery, [userId]);
+    const user = userResults[0];
+    const userRole = user.role;
+
+    if (userRole !== 'admin') {
+      return res.status(403).json({ message: 'Unauthorized access' });
+    }
+
+    const adsQuery = 'SELECT * FROM hirdetes';
+    const [adsResults] = await pool.query(adsQuery);
+    const advertisements = adsResults;
+
+    const likesQuery = `
+      SELECT liked_ads.advertisement_id, GROUP_CONCAT(f.username) AS usernames
+      FROM liked_ads
+      JOIN felhasznalo f ON liked_ads.user_id = f.id
+      GROUP BY liked_ads.advertisement_id
+    `;
+    const [likesResults] = await pool.query(likesQuery);
+    const likes = {};
+    likesResults.forEach((row) => {
+      likes[row.advertisement_id] = row.usernames.split(',');
+    });
+
+    const cartQuery = `
+      SELECT cart.advertisement_id, COUNT(f.id) AS num_users
+      FROM cart
+      JOIN felhasznalo f ON cart.user_id = f.id
+      GROUP BY cart.advertisement_id
+    `;
+    const [cartResults] = await pool.query(cartQuery);
+    const cart = {};
+    cartResults.forEach((row) => {
+      cart[row.advertisement_id] = row.num_users;
+    });
+
+    res.render('adminTable', { advertisements, user, likes, cart });
+  } catch (error) {
+    console.error('Error fetching advertisements:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 export default router;

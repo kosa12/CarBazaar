@@ -1,6 +1,16 @@
 import express from 'express';
-import pool from '../db/connection.js';
 import authMiddleware from '../middlewares/auth.js';
+import { deleteAD, insertIntoMessages } from '../utils/advertisementUtils.js';
+import {
+  insertOffer,
+  getFelhasznalo,
+  getOffers,
+  deleteCartRow,
+  getHirdetes,
+  getCartRow,
+  insertCart,
+  updateOffer,
+} from '../utils/cartUtils.js';
 
 const router = express.Router();
 
@@ -8,26 +18,23 @@ router.post('/add-to-cart', authMiddleware, async (req, res) => {
   const { advertisementId, userId } = req.body;
 
   try {
-    const [userRows] = await pool.query('SELECT * FROM felhasznalo WHERE id = ?', [userId]);
+    const [userRows] = await getFelhasznalo(userId);
     if (userRows.length === 0) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const [adRows] = await pool.query('SELECT * FROM hirdetes WHERE id = ?', [advertisementId]);
+    const [adRows] = await getHirdetes(advertisementId);
     if (adRows.length === 0) {
       return res.status(404).json({ success: false, message: 'Advertisement not found' });
     }
 
-    const [existingCartRows] = await pool.query('SELECT * FROM cart WHERE user_id = ? AND advertisement_id = ?', [
-      userId,
-      advertisementId,
-    ]);
+    const [existingCartRows] = await getCartRow(userId, advertisementId);
 
     if (existingCartRows.length > 0) {
       return res.status(400).json({ success: false, message: 'Advertisement already in cart' });
     }
 
-    await pool.query('INSERT INTO cart (user_id, advertisement_id) VALUES (?, ?)', [userId, advertisementId]);
+    await insertCart(userId, advertisementId);
 
     res.json({ success: true, message: 'Advertisement added to cart successfully!' });
   } catch (error) {
@@ -41,20 +48,17 @@ router.delete('/remove/:advertisementId', authMiddleware, async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const [userRows] = await pool.query('SELECT * FROM felhasznalo WHERE id = ?', [userId]);
+    const [userRows] = await getFelhasznalo(userId);
     if (userRows.length === 0) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const [adRows] = await pool.query('SELECT * FROM hirdetes WHERE id = ?', [advertisementId]);
+    const [adRows] = await getHirdetes(advertisementId);
     if (adRows.length === 0) {
       return res.status(404).json({ success: false, message: 'Advertisement not found' });
     }
 
-    const [cartRows] = await pool.query('DELETE FROM cart WHERE user_id = ? AND advertisement_id = ?', [
-      userId,
-      advertisementId,
-    ]);
+    const [cartRows] = await deleteCartRow(userId, advertisementId);
 
     if (cartRows.affectedRows > 0) {
       res.json({ success: true, message: 'Advertisement removed from cart successfully!' });
@@ -72,37 +76,26 @@ router.post('/buy/:advertisementId', authMiddleware, async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const [userRows] = await pool.query('SELECT * FROM felhasznalo WHERE id = ?', [userId]);
+    const [userRows] = await getFelhasznalo(userId);
     if (userRows.length === 0) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const [adRows] = await pool.query('SELECT * FROM hirdetes WHERE id = ?', [advertisementId]);
+    const [adRows] = await getHirdetes(advertisementId);
     if (adRows.length === 0) {
       return res.status(404).json({ success: false, message: 'Advertisement not found' });
     }
 
-    const [cartRows] = await pool.query('SELECT * FROM cart WHERE user_id = ? AND advertisement_id = ?', [
-      userId,
-      advertisementId,
-    ]);
+    const [cartRows] = await getCartRow(userId, advertisementId);
     if (cartRows.length === 0) {
       return res.status(404).json({ success: false, message: 'Advertisement not found in cart' });
     }
 
-    await pool.query('DELETE FROM cart WHERE advertisement_id = ?', [advertisementId]);
-    await pool.query('DELETE FROM fenykep WHERE advertisement_id = ?', [advertisementId]);
-    await pool.query('DELETE FROM offers WHERE advertisement_id = ?', [advertisementId]);
-    await pool.query('DELETE FROM liked_ads WHERE advertisement_id = ?', [advertisementId]);
-
     const ownerUserId = adRows[0].user_id;
-    await pool.query('INSERT INTO messages (sender_id, receiver_id, message_content) VALUES (?, ?, ?)', [
-      userId,
-      ownerUserId,
-      `Your car ${adRows[0].brand} has been purchased for $${adRows[0].price}!`,
-    ]);
+    const message = `Your car ${adRows[0].brand} has been purchased for $${adRows[0].price}!`;
 
-    await pool.query('DELETE FROM hirdetes WHERE id = ?', [advertisementId]);
+    await insertIntoMessages(userId, ownerUserId, message);
+    await deleteAD(advertisementId);
 
     res.json({ success: true, message: 'Car purchased successfully!' });
   } catch (error) {
@@ -117,34 +110,23 @@ router.post('/offer/:advertisementId', authMiddleware, async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const [userRows] = await pool.query('SELECT * FROM felhasznalo WHERE id = ?', [userId]);
+    const [userRows] = await getFelhasznalo(userId);
     if (userRows.length === 0) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const [adRows] = await pool.query('SELECT * FROM hirdetes WHERE id = ?', [advertisementId]);
+    const [adRows] = await getHirdetes(advertisementId);
     if (adRows.length === 0) {
       return res.status(404).json({ success: false, message: 'Advertisement not found' });
     }
 
-    const [existingOfferRows] = await pool.query('SELECT * FROM offers WHERE user_id = ? AND advertisement_id = ?', [
-      userId,
-      advertisementId,
-    ]);
+    const [existingOfferRows] = await getOffers(userId, advertisementId);
 
     if (existingOfferRows.length > 0) {
-      await pool.query('UPDATE offers SET price = ? WHERE user_id = ? AND advertisement_id = ?', [
-        offerAmount,
-        userId,
-        advertisementId,
-      ]);
+      await updateOffer(userId, advertisementId, offerAmount);
       res.json({ success: true, message: 'Offer updated successfully!' });
     } else {
-      await pool.query('INSERT INTO offers (user_id, advertisement_id, price) VALUES (?, ?, ?)', [
-        userId,
-        advertisementId,
-        offerAmount,
-      ]);
+      await insertOffer(userId, advertisementId, offerAmount);
       console.log('Offer placed successfully!');
       res.json({ success: true, message: 'Offer placed successfully!' });
     }

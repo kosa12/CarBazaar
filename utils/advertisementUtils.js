@@ -84,3 +84,89 @@ export async function getAdvertisementDetails(advertisementId) {
     throw error;
   }
 }
+
+export async function getUsers() {
+  try {
+    const [users] = await pool.execute('SELECT id, username FROM felhasznalo');
+    return users;
+  } catch (error) {
+    console.error('Error retrieving users:', error);
+    return [];
+  }
+}
+
+export async function insertIntoHirdetes(
+  id,
+  brand,
+  city,
+  price,
+  date,
+  fuel_type,
+  transmission,
+  car_condition,
+  body_type,
+  color,
+  kilometers,
+  userId,
+) {
+  try {
+    await pool.execute(
+      'INSERT INTO hirdetes (id, brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [id, brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers, userId],
+    );
+  } catch (error) {
+    console.error('Error inserting advertisement into database:', error);
+    throw error;
+  }
+}
+
+export async function getUserNameOffer(advertisementId) {
+  try {
+    const sql = `
+      SELECT o.*, u.username
+      FROM offers o
+      INNER JOIN felhasznalo u ON o.user_id = u.id
+      WHERE o.advertisement_id = ?
+    `;
+    const [offers] = await pool.query(sql, [advertisementId]);
+    return offers;
+  } catch (error) {
+    console.error('Error retrieving offers:', error);
+    throw error;
+  }
+}
+export async function getIDfromFelhasznalo(username) {
+  try {
+    const receiver = await pool.query('SELECT id FROM felhasznalo WHERE username = ?', [username]);
+    return receiver;
+  } catch (error) {
+    console.error('Error retrieving ID:', error);
+    throw error;
+  }
+}
+
+export async function insertIntoMessages(senderId, receiverId, message) {
+  try {
+    await pool.execute('INSERT INTO messages (sender_id, receiver_id, message_content) VALUES (?, ?, ?)', [
+      senderId,
+      receiverId,
+      message,
+    ]);
+  } catch (error) {
+    console.error('Error inserting message into database:', error);
+    throw error;
+  }
+}
+
+export async function deleteAD(advertisementId) {
+  try {
+    await pool.query('DELETE FROM liked_ads WHERE advertisement_id = ?', [advertisementId]);
+    await pool.query('DELETE FROM cart WHERE advertisement_id = ?', [advertisementId]);
+    await pool.query('DELETE FROM fenykep WHERE advertisement_id = ?', [advertisementId]);
+    await pool.query('DELETE FROM offers WHERE advertisement_id = ?', [advertisementId]);
+    await pool.query('DELETE FROM hirdetes WHERE id = ?', [advertisementId]);
+  } catch (error) {
+    console.error('Error deleting advertisement from database:', error);
+    throw error;
+  }
+}

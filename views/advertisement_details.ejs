@@ -75,7 +75,7 @@
             class="ad-detail-img image w-full h-full"
           />
 
-          <% if (user && user.username === advertisement.username) { %>
+          <% if (user && user.username === advertisement.username || user.role === 'admin') { %>
           <button
             class="absolute inset-0 delete-image bg-black bg-opacity-50 text-white text-sm flex items-center justify-center transition duration-300 opacity-0 hover:opacity-100"
           >
@@ -85,12 +85,12 @@
         </div>
         <% }) %>
       </div>
-      <% if (user && user.username === advertisement.username) { %>
+      <% if (user && user.username === advertisement.username || user.role === 'admin') { %>
       <div class="title mb-4 mt-10 text-2xl font-semibold">Upload a new image</div>
       <%- include(partialPath, { advertisementId: advertisement.id }) %> <% } %>
     </div>
 
-    <% if (user && user.username === advertisement.username) { %>
+    <% if (user && user.username === advertisement.username || user.role === 'admin') { %>
     <div id="offerList"></div>
     <input type="hidden" id="advertisementId" data-advertisement-id="<%= advertisement.id %>" />
     <% } %> <% if (user && user.username !== advertisement.username) { %>

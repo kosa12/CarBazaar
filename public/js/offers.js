@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     offerList.addEventListener('click', function (event) {
       if (event.target.classList.contains('accept-offer-button')) {
         const offerId = event.target.dataset.offerId;
-        const confirmation = confirm(`Are you sure you want to sell this car?`);
+        const confirmation = window.confirm(`Are you sure you want to sell this car?`);
         if (confirmation) {
           handleOfferAction(offerId, 'accept');
         }
@@ -170,12 +170,10 @@ function renderOffers(responseData) {
 }
 
 function displayNoOffersMessage(container) {
-  // Clear previous content
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
 
-  // Add message in the center
   const message = document.createElement('div');
   message.className = 'text-center py-4';
   message.textContent = 'No offers yet.';
@@ -183,12 +181,10 @@ function displayNoOffersMessage(container) {
 }
 
 function displayErrorMessage(container) {
-  // Clear previous content
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
 
-  // Add message in the center
   const message = document.createElement('div');
   message.className = 'text-center py-4';
   message.textContent = 'Error fetching offers. Please try again later.';

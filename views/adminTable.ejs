@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Table</title>
+    <link rel="stylesheet" href="/output.css" />
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="tracking-normal px-4 mt-20 bg-background font-Courier">
+    <%- include('partials/headerForOtherPages.ejs', { user: user }) %>
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold mb-4">Admin Table</h1>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 bg-gray-200 text-gray-600 font-bold border border-gray-200">ID</th>
+              <th class="px-4 py-2 bg-gray-200 text-gray-600 font-bold border border-gray-200">Likes</th>
+              <th class="px-4 py-2 bg-gray-200 text-gray-600 font-bold border border-gray-200">In cart</th>
+              <th class="px-4 py-2 bg-gray-200 text-gray-600 font-bold border border-gray-200">Owner ID</th>
+              <th class="px-4 py-2 bg-gray-200 text-gray-600 font-bold border border-gray-200">Price</th>
+              <th class="px-4 py-2 bg-gray-200 text-gray-600 font-bold border border-gray-200">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% advertisements.forEach(ad => { %>
+            <tr>
+              <td class="px-4 py-2 border border-gray-200">
+                <a href="/advertisement/<%= ad.id %>" class="text-blue-500 hover:underline"><%= ad.id %></a>
+              </td>
+              <td class="px-4 py-2 border border-gray-200">
+                <button class="likes-btn text-blue-500 hover:underline" data-id="<%= ad.id %>">
+                  <%= ad.likes %> Likes
+                </button>
+              </td>
+              <td class="px-4 py-2 border border-gray-200">
+                <% if (cart[ad.id]) { %> <%= cart[ad.id] %> Users <% } else { %> No user <% } %>
+              </td>
+              <td class="px-4 py-2 border border-gray-200"><%= ad.user_id %></td>
+              <td class="px-4 py-2 border border-gray-200">$<%= ad.price %></td>
+              <td class="px-4 py-2 border border-gray-200">
+                <button
+                  class="delete-btn bg-red-500 text-black px-4 py-2 rounded hover:bg-red-700"
+                  data-id="<%= ad.id %>"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="likesModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Users who liked this ad:</h2>
+        <br />
+        <ul id="likesList"></ul>
+      </div>
+    </div>
+
+    <script type="application/json" id="likesData">
+      <%= JSON.stringify(likes) %>
+    </script>
+
+    <script src="/js/likesModal.js"></script>
+    <script src="/js/dropdownuser.js"></script>
+    <script src="/js/deleteAd.js" type="module"></script>
+  </body>
+</html>

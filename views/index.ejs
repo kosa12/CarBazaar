@@ -21,7 +21,7 @@
       <br />
 
       <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Search Advertisements:</div>
-      <%- include('partials/homesearch.ejs', {user: user}) %>
+      <%- include('partials/homesearch.ejs', {user: user, likedAdvertisements: likedAdvertisements}) %>
 
       <a name="advertisementsListO"></a>
       <br />
@@ -80,9 +80,6 @@
                 />
               </a>
             </div>
-            <div class="mr-8 flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
-              <img src="/icons/offer.png" alt="Offer Icon" class="h-8 w-8" />
-            </div>
             <div class="flex flex-col items-center hover:scale-125 transform transition-transform duration-300">
               <a href="#" class="cart-icon" data-advertisement-id="<%= ad.id %>" data-user-id="<%= user.id %>">
                 <img src="/icons/cart.png" alt="Cart Icon" class="h-8 w-8" />
@@ -95,9 +92,10 @@
 
       <br />
       <br class="mt-20" />
+      <% if (user && user.username) { %>
       <a name="add"></a>
       <div class="title mt-20 mb-4 text-2xl font-semibold text-center">Create NEW Advertisement for your car!</div>
-      <% if (user) { %> <%- include('partials/add_ads.ejs',) %> <% } %>
+      <%- include('partials/add_ads.ejs',) %> <% } %>
     </div>
 
     <%- include('partials/footer.ejs') %>

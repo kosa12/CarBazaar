@@ -3,12 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import authMiddleware from '../middlewares/auth.js';
-import pool from '../db/connection.js';
 import {
   getAdvertisementDetails,
   deleteAdvertisementImage,
   isUserOwnerOfAdvertisement,
   getImage,
+  getUsers,
+  insertIntoHirdetes,
+  getUserNameOffer,
+  getIDfromFelhasznalo,
+  insertIntoMessages,
+  deleteAD,
 } from '../utils/advertisementUtils.js';
 import { deleteFile } from '../utils/fileUtils.js';
 
@@ -19,7 +24,7 @@ router.use(authMiddleware);
 
 router.get('/new', async (req, res) => {
   try {
-    const [users] = await pool.query('SELECT id, username FROM felhasznalo');
+    const [users] = getUsers();
     res.render('new_advertisement', { users });
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -57,9 +62,19 @@ router.post('/', async (req, res) => {
 
   try {
     const id = uuidv4();
-    await pool.execute(
-      'INSERT INTO hirdetes (id, brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [id, brand, city, price, date, fuel_type, transmission, car_condition, body_type, color, kilometers, userId],
+    insertIntoHirdetes(
+      id,
+      brand,
+      city,
+      price,
+      date,
+      fuel_type,
+      transmission,
+      car_condition,
+      body_type,
+      color,
+      kilometers,
+      userId,
     );
     res.redirect('/');
     return null;
@@ -124,13 +139,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/:id/offers', authMiddleware, async (req, res) => {
   const advertisementId = req.params.id;
   try {
-    const sql = `
-      SELECT o.*, u.username
-      FROM offers o
-      INNER JOIN felhasznalo u ON o.user_id = u.id
-      WHERE o.advertisement_id = ?
-    `;
-    const [offers] = await pool.query(sql, [advertisementId]);
+    const offers = await getUserNameOffer(advertisementId);
 
     res.json({ success: true, offers });
   } catch (error) {
@@ -142,16 +151,27 @@ router.get('/:id/offers', authMiddleware, async (req, res) => {
 router.post('/addmessage', authMiddleware, async (req, res) => {
   const { messageContent, senderID, receiverUsername } = req.body;
 
-  const [[receiver]] = await pool.query('SELECT id FROM felhasznalo WHERE username = ?', [receiverUsername]);
+  const [[receiver]] = await getIDfromFelhasznalo(receiverUsername);
   const receiverId = receiver.id;
   try {
-    const query = 'INSERT INTO messages (sender_id, receiver_id, message_content) VALUES (?, ?, ?)';
-    await pool.query(query, [senderID, receiverId, messageContent]);
+    insertIntoMessages(messageContent, senderID, receiverId);
 
     return res.status(200).json({ message: 'Message sent successfully' });
   } catch (error) {
     console.error('Error sending message:', error);
     return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.delete('/:id/admin', authMiddleware, async (req, res) => {
+  const advertisementId = req.params.id;
+
+  try {
+    deleteAD(advertisementId);
+    res.json({ success: true, message: 'Advertisement deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting advertisement:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 

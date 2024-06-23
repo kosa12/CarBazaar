@@ -2,7 +2,7 @@ import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import pool from '../db/connection.js';
+import { getUser } from '../utils/loginUtils.js';
 
 dotenv.config({ path: './config/secret.env' });
 
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const [rows] = await pool.query('SELECT * FROM felhasznalo WHERE username = ?', [username]);
+    const [rows] = await getUser(username);
     const user = rows[0];
 
     if (!user) {
