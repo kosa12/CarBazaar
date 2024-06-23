@@ -22,7 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
     offerList.addEventListener('click', function (event) {
       if (event.target.classList.contains('accept-offer-button')) {
         const offerId = event.target.dataset.offerId;
-        handleOfferAction(offerId, 'accept');
+        const confirmation = confirm(`Are you sure you want to sell this car?`);
+        if (confirmation) {
+          handleOfferAction(offerId, 'accept');
+        }
       } else if (event.target.classList.contains('decline-offer-button')) {
         const offerId = event.target.dataset.offerId;
         handleOfferAction(offerId, 'decline');

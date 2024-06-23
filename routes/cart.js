@@ -91,14 +91,15 @@ router.post('/buy/:advertisementId', authMiddleware, async (req, res) => {
     }
 
     await pool.query('DELETE FROM cart WHERE advertisement_id = ?', [advertisementId]);
-
     await pool.query('DELETE FROM fenykep WHERE advertisement_id = ?', [advertisementId]);
+    await pool.query('DELETE FROM offers WHERE advertisement_id = ?', [advertisementId]);
+    await pool.query('DELETE FROM liked_ads WHERE advertisement_id = ?', [advertisementId]);
 
     const ownerUserId = adRows[0].user_id;
     await pool.query('INSERT INTO messages (sender_id, receiver_id, message_content) VALUES (?, ?, ?)', [
       userId,
       ownerUserId,
-      `Your car ${adRows[0].brand} has been purchased.`,
+      `Your car ${adRows[0].brand} has been purchased for $${adRows[0].price}!`,
     ]);
 
     await pool.query('DELETE FROM hirdetes WHERE id = ?', [advertisementId]);

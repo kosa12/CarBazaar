@@ -71,15 +71,15 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const advertisementId = req.params.id;
-
-  try {
-    const advertisement = await getAdvertisementDetails(advertisementId);
-    advertisement.date = new Date(advertisement.date).toLocaleDateString();
-    const partialPath = path.join('partials', 'image_upload_form.ejs');
-    res.render('advertisement_details', { advertisement, partialPath, user: req.user });
-  } catch (error) {
-    console.error('Error retrieving advertisement details:', error);
-    res.status(500).send('Internal Server Error');
+  if (advertisementId) {
+    try {
+      const advertisement = await getAdvertisementDetails(advertisementId);
+      advertisement.date = new Date(advertisement.date).toLocaleDateString();
+      const partialPath = path.join('partials', 'image_upload_form.ejs');
+      res.render('advertisement_details', { advertisement, partialPath, user: req.user });
+    } catch (error) {
+      res.redirect('/');
+    }
   }
 });
 
