@@ -4,10 +4,6 @@
 
 The Advertisement Management System is a web application that allows users to manage advertisements. It includes functionalities for creating, viewing, and deleting advertisements. Additionally, users can like advertisements, add them to their cart, and view details about each advertisement. Admin users have additional privileges, such as the ability to delete any advertisement.
 
-## Acknowledgements
-  - This project was made for my web development class
-  - Special thanks to my univeristy teachers for their support and guidance throughout the development of this project.
-
 ## Features
 
 - User Authentication
@@ -72,6 +68,12 @@ The Advertisement Management System is a web application that allows users to ma
    npm start
 
 6. **The application should now be running on http://localhost:5000.**
+
+
+## Acknowledgements
+  - This project was made for my web development class
+  - Special thanks to my univeristy teachers for their support and guidance throughout the development of this project.
+
 
 ## License
 - This project is licensed under the MIT License. See the LICENSE file for details.
