@@ -4,6 +4,10 @@
 
 The Advertisement Management System is a web application that allows users to manage advertisements. It includes functionalities for creating, viewing, and deleting advertisements. Additionally, users can like advertisements, add them to their cart, and view details about each advertisement. Admin users have additional privileges, such as the ability to delete any advertisement.
 
+## Acknowledgements
+  - This project was made for my web development class
+  - Special thanks to my univeristy teachers for their support and guidance throughout the development of this project.
+
 ## Features
 
 - User Authentication
@@ -33,8 +37,6 @@ The Advertisement Management System is a web application that allows users to ma
 
 ### Frontend
 
-- **HTML5**: Markup language for structuring and presenting content on the web.
-- **CSS3**: Style sheet language used for describing the look and formatting of a document written in HTML.
 - **JavaScript**: Programming language that enables interactive web pages.
 - **EJS**: Embedded JavaScript templating language for generating HTML markup with plain JavaScript.
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
@@ -70,4 +72,7 @@ The Advertisement Management System is a web application that allows users to ma
    npm start
 
 6. **The application should now be running on http://localhost:5000.**
+
+## License
+- This project is licensed under the MIT License. See the LICENSE file for details.
    
